@@ -1,2 +1,4 @@
 src/assets/large_videos/summary[[:space:]]video.mp4 filter=lfs diff=lfs merge=lfs -text
 src/assets/large_videos/sumo[[:space:]]demo.mp4 filter=lfs diff=lfs merge=lfs -text
+assets/*.mp4 filter=lfs diff=lfs merge=lfs -text
+assets/ filter=lfs diff=lfs merge=lfs -text
