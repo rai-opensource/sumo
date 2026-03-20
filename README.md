@@ -1,2 +1,3 @@
-# Sumo: Dynamic and Generalizable Whole-Body Loco-Manipulation
-`sumo` is a `python` package that implements a combination of hierarchical RL and sampling-based MPC to execute dynamic whole-body tasks.
+# Sumo Website
+
+To host locally, run `npx serve` or `python -m http.server 3000` and open http://localhost:3000
