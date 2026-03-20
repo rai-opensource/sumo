@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sumo</title>
+  <link rel="icon" href="https://rai-inst.com/wp-content/uploads/2024/12/cropped-RAI-FavIcon-32x32.png" sizes="32x32">
+  <link rel="icon" href="https://rai-inst.com/wp-content/uploads/2024/12/cropped-RAI-FavIcon-192x192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="https://rai-inst.com/wp-content/uploads/2024/12/cropped-RAI-FavIcon-180x180.png">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="content" style="display:block;">
+    <!-- HERO -->
+    <header class="full-page-image" id="hero">
+      <video id="bg-video" preload="auto" autoplay muted playsinline loop poster="assets/images/teaser_poster.jpg">
+        <source src="assets/hardware_demo/demo teaser.mp4" type="video/mp4" />
+      </video>
+      <div class="overlay"></div>
+      <div class="bottom-overlay" style="padding:0 24px;">
+        <h1>Sumo<br/>Dynamic and Generalizable Whole-Body Loco-Manipulation</h1>
+      </div>
+      <!-- Scroll indicator -->
+      <div class="scroll-indicator" onclick="scrollToContent()">
+        ↓
+      </div>
+    </header>
+    
+    <!-- MAIN CONTENT BODY -->
+    <main class="main-content">
+      <!-- <div class="hero-text">Versatile Loco-Manipulation through Flexible Interlimb Coordination</div> -->
+
+      <div class="sub-hero-text">Sumo: Dynamic and Generalizable Whole-Body Loco-Manipulation</div>
+
+         <!-- Add Authors -->
+      <div class="authors">
+        John Z. Zhang<sup>1,2</sup>,
+        Maks Sorokin<sup>2</sup>*,
+        Jan Brüdigam<sup>2</sup>*,
+        Brandon Hung<sup>2</sup>*,
+        Stephen Phillips<sup>2</sup>,
+        Dmitry Yershov<sup>2</sup>,<br>
+        Farzad Niroui<sup>2</sup>,
+        Tong Zhao<sup>2</sup>,
+        Leonor Fermoselle<sup>2</sup>,
+        Xinghao Zhu<sup>2</sup>,
+        Chao Cao<sup>2</sup>,
+        Duy Ta<sup>2</sup>,<br>
+        Tao Pang<sup>2</sup>,
+        Jiuguang Wang<sup>2</sup>,
+        Preston Culbertson<sup>2,3</sup>,
+        Zachary Manchester<sup>1</sup>,
+        and Simon Le Cléac'h<sup>2</sup>
+        <div class="affiliation">
+          <sup>1</sup>MIT&nbsp;&nbsp;&nbsp;<sup>2</sup>RAI Institute&nbsp;&nbsp;&nbsp;<sup>3</sup>Cornell
+        </div>
+        <div class="author-note">*Equal Contribution</div>
+        <div class="author-note">This work was done in part during an internship at the RAI Institute.</div>
+        <div class="author-note">Corresponding Email: <a href="mailto:jzhang3@mit.edu">jzhang3@mit.edu</a></div>
+      </div>
+      
+      <!-- <div class="main-video-container" style="margin: 20px 0; text-align: center;">
+        <video style="width: 100%; max-width: 800px;" controls muted playsinline loop>
+          <!-- TODO: Replace with SUMO main video -->
+          <source src="assets/videos/SUMO_main.mp4" type="video/mp4" />
+        </video>
+      <!-- </div> -->
+      
+      <div class="quick-links">
+        <a href="#" target="_blank">[arXiv (coming soon)]</a>
+        <a href="#" target="_blank">[summary video HD (assets/large_videos/summary video.mp4)]</a>
+        <a href="#" target="_blank">[demo video HD (assets/large_videos/demo demo.mp4)]</a>
+        <a href="#" target="_blank">[code (coming soon)]</a>
+      </div>
+
+      <div class="tagline" id="abstract">Abstract</div>
+      <div class="section">
+        <p>
+          This paper presents a sim-to-real approach that enables legged robots to dynamically manipulate large and heavy objects with whole-body dexterity. Our key insight is that by performing test-time steering of a pre-trained whole-body control policy with a sample-based planner, we can enable these robots to solve a variety of dynamic loco-manipulation tasks. Interestingly, we find our method generalizes to a diverse set of objects and tasks with no additional tuning or training, and can be further enhanced by flexibly adjusting the cost function at test time. We demonstrate the capabilities of our approach through a variety of challenging loco-manipulations tasks on a Spot quadruped robot in the real world, including uprighting a tire heavier than the robot's nominal lifting capacity and dragging a crowd-control barrier larger and taller than the robot itself. Additionally, we show that the same approach can be generalized to humanoid loco-manipulations tasks, such as opening a door and pushing a table, in simulation.
+        </p>
+      </div>
+
+      <!-- Methods Section -->
+      <div class="tagline" id="methods">Methods</div>
+      <div class="section">
+        <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0; align-items: start;">
+          <img src="assets/img/system_overview/system_overview.001.png" alt="System Overview" style="width: 711px; height: 400px; object-fit: contain; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,.15); margin: 0; flex: 0 0 auto;">
+          <img src="assets/img/dynamics_comparison/dynamics_comparison.001.png" alt="Dynamics Comparison" style="width: 533px; height: 400px; object-fit: contain; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,.15); margin: 0; flex: 0 0 auto;">
+        </div>
+        <p class="figure-caption" style="text-align: center; margin-top: 10px;"><b>System Overview:</b> (left) Sumo takes an hirarchical approach that combines a pre-trained whole-body control policy (purple) with a high-level sample-based MPC (yellow). The whole-body control policy takes in the current state and desired torso, arm, and leg commands and outputs the joint-level commands for the quadruped or humanoid robots at $50$Hz. The high-level sample-based MPC aims to minimize a task-specific cost function by performing dyanmics rollouts with the policy-in-the-loop (right).</p>
+      </div>
+
+      <div class="tagline" id="spot-loco-manipulation">Spot Loco-Manipulation</div>
+
+      <!-- Video Gallery Section - Spot Loco Manipulation Tasks -->
+      <p class="section" style="margin-top: 20px; margin-bottom: 30px;">Note: the Spot robot has a peak lift capacity of 11kg and a continuous load capacity of 5kg.</p>
+
+      <!-- Task 1: Tire Upright -->
+      <div class="video-gallery-section" id="gallery-section-tire-upright">
+        <div class="video-gallery-container">
+          <div class="video-gallery" id="tire-upright-row">
+            <video class="gallery-video" src="assets/hardware_demo/tire upright.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/blender_demo/tire upright.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/success_rate/tire upright.mp4" autoplay muted playsinline loop></video>
+          </div>
+        </div>
+        <div class="gallery-caption-container">
+          <p class="figure-caption gallery-caption">
+            <b>Tire Upright:</b> Lifts a tire to a vertical position. The tire weighs 15 kg, exceeding the robot's peak lifting capacity.
+          </p>
+        </div>
+      </div>
+
+      <!-- Task 2: Cone Upright -->
+      <div class="video-gallery-section" id="gallery-section-cone-upright">
+        <div class="video-gallery-container">
+          <div class="video-gallery" id="cone-upright-row">
+            <video class="gallery-video" src="assets/hardware_demo/traffic cone upright.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/blender_demo/traffic cone upright.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/success_rate/traffic cone upright.mp4" autoplay muted playsinline loop></video>
+          </div>
+        </div>
+        <div class="gallery-caption-container">
+          <p class="figure-caption gallery-caption">
+            <b>Cone Upright:</b> Upright a traffic cone to a standing position.
+          </p>
+        </div>
+      </div>
+
+      <!-- Task 3: Chair Upright -->
+      <div class="video-gallery-section" id="gallery-section-chair-upright">
+        <div class="video-gallery-container">
+          <div class="video-gallery" id="chair-upright-row">
+            <video class="gallery-video" src="assets/hardware_demo/chair upright.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/blender_demo/chair upright.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/success_rate/yellow_chair_upright.mp4" autoplay muted playsinline loop></video>
+          </div>
+        </div>
+        <div class="gallery-caption-container">
+          <p class="figure-caption gallery-caption">
+            <b>Chair Upright:</b> Upright a yellow chair to a standing position. The chair weighs 16.5 kg, exceeding the robot's peak lifting capacity.
+          </p>
+        </div>
+      </div>
+
+      <!-- Task 4: Barrier Upright -->
+      <div class="video-gallery-section" id="gallery-section-barrier-upright">
+        <div class="video-gallery-container">
+          <div class="video-gallery" id="barrier-upright-row">
+            <video class="gallery-video" src="assets/hardware_demo/barrier upright.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/blender_demo/barrier upright.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/success_rate/barrier_upright.mp4" autoplay muted playsinline loop></video>
+          </div>
+        </div>
+        <div class="gallery-caption-container">
+          <p class="figure-caption gallery-caption">
+            <b>Barrier Upright:</b> Upright a crowd control barrier to a standing position. The barrier weighs 16 kg, exceeding the robot's peak lifting capacity, and is larger than the robot itself.      </p>
+        </div>
+      </div>
+
+      <!-- Task 5: Tire Stack -->
+      <div class="video-gallery-section" id="gallery-section-tire-stack">
+        <div class="video-gallery-container">
+          <div class="video-gallery" id="tire-stack-row">
+            <video class="gallery-video" src="assets/hardware_demo/tire stack.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/blender_demo/tire stack.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/success_rate/tire_stack.mp4" autoplay muted playsinline loop></video>
+          </div>
+        </div>
+        <div class="gallery-caption-container">
+          <p class="figure-caption gallery-caption">
+            <b>Tire Stack:</b> Stack a tire on top of another. The tires weigh 15 kg each, exceeding the robot's peak lifting capacity.
+          </p>
+        </div>
+      </div>
+
+      <!-- Task 6: Barrier Drag -->
+      <div class="video-gallery-section" id="gallery-section-barrier-drag">
+        <div class="video-gallery-container">
+          <div class="video-gallery" id="barrier-drag-row">
+            <video class="gallery-video" src="assets/hardware_demo/barrier drag.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/blender_demo/barrier drag.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/success_rate/barrier_drag.mp4" autoplay muted playsinline loop></video>
+          </div>
+        </div>
+        <div class="gallery-caption-container">
+          <p class="figure-caption gallery-caption">
+            <b>Barrier Drag:</b> Drag a crowd control barrier to the yellow circle. The barrier weighs 16 kg, exceeding the robot's peak lifting capacity and is larger than the robot itself.
+          </p>
+        </div>
+      </div>
+
+      <!-- Task 7: Tire Rack Drag -->
+      <div class="video-gallery-section" id="gallery-section-rack-drag">
+        <div class="video-gallery-container">
+          <div class="video-gallery" id="rack-drag-row">
+            <video class="gallery-video" src="assets/hardware_demo/tire rack drag.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/blender_demo/tire rack drag.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/success_rate/tire_rack_drag.mp4" autoplay muted playsinline loop></video>
+          </div>
+        </div>
+        <div class="gallery-caption-container">
+          <p class="figure-caption gallery-caption">
+            <b>Tire Rack Drag:</b> Drag a tire rack to the yellow circle.
+          </p>
+        </div>
+      </div>
+
+      <!-- Task 8: Rugged Box Push -->
+      <div class="video-gallery-section" id="gallery-section-rugged-box-push">
+        <div class="video-gallery-container">
+          <div class="video-gallery" id="rugged-box-push-row">
+            <video class="gallery-video" src="assets/hardware_demo/rugged box push.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/blender_demo/rugged box push.mp4" autoplay muted playsinline loop></video>
+            <video class="gallery-video" src="assets/success_rate/rugged box push.mp4" autoplay muted playsinline loop></video>
+          </div>
+        </div>
+        <div class="gallery-caption-container">
+          <p class="figure-caption gallery-caption">
+            <b>Rugged Box Push:</b> Push a rugged box to the yellow circle. The box weighs 20 kg, exceeding the robot capacity with arm alone under every day friction conditions.
+          </p>
+        </div>
+      </div>
+    <!-- End Spot Loco Manipulation Section -->
+
+    <div class="tagline" id="g1-loco-manipulation">G1 Loco-Manipulation</div>
+
+    <!-- Video Gallery Section - G1 Loco Manipulation Tasks -->
+    <!-- 2x2 Grid Layout with individual captions -->
+    <div class="video-gallery-section" id="gallery-section-g1-tasks">
+      <div class="video-gallery-container" style="max-width: 1200px;">
+        <!-- First row: 2 videos with captions -->
+        <div id="g1-row-1" style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+          <div style="flex: 0 0 auto;">
+            <video class="gallery-video" src="assets/g1/g1_table_push_executed_only.mp4" autoplay muted playsinline loop style="height: 280px; width: auto;"></video>
+            <p class="figure-caption" style="text-align: center; margin-top: 10px;"><b>Table Push:</b> Push a table to the goal location.</p>
+          </div>
+          <div style="flex: 0 0 auto;">
+            <video class="gallery-video" src="assets/g1/g1_chair_push_executed_only.mp4" autoplay muted playsinline loop style="height: 280px; width: auto;"></video>
+            <p class="figure-caption" style="text-align: center; margin-top: 10px;"><b>Chair Push:</b> Push a chair to the goal location.</p>
+          </div>
+        </div>
+        <!-- Second row: 2 videos with captions -->
+        <div id="g1-row-2" style="display: flex; justify-content: center; gap: 20px;">
+          <div style="flex: 0 0 auto;">
+            <video class="gallery-video" src="assets/g1/g1_door_open_executed_only.mp4" autoplay muted playsinline loop style="height: 280px; width: auto;"></video>
+            <p class="figure-caption" style="text-align: center; margin-top: 10px;"><b>Door Open:</b> Opening and walking through a door.</p>
+          </div>
+          <div style="flex: 0 0 auto;">
+            <video class="gallery-video" src="assets/g1/g1_box_push_executed_only.mp4" autoplay muted playsinline loop style="height: 280px; width: auto;"></video>
+            <p class="figure-caption" style="text-align: center; margin-top: 10px;"><b>Box Push:</b> Push a box to the goal location.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End G1 Loco Manipulation Section -->
+
+    <div class="tagline" id="experimental-analysis">Experimental Analysis</div>
+
+    <!-- Experimental Analysis Section -->
+
+    <!-- Group 1: Control Hierarchy Comparison -->
+    <div class="video-gallery-section" id="gallery-section-hierarchy">
+      <div class="video-gallery-container">
+        <div style="display: flex; justify-content: center; margin: 20px 0;">
+          <img src="assets/img/hierarchy_comparison.png" alt="Control Hierarchy Comparison" style="height: 280px; width: auto; object-fit: contain; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,.15); margin: 0;">
+        </div>
+      </div>
+      <div class="gallery-caption-container">
+        <p class="figure-caption gallery-caption">
+          <b>Hierarchical Control is Key for Loco-Manipulation:</b> Sumo (our method) significantly outperforms end-to-end MPC and RL baselines that struggle to maintain balance while manipulating objects.
+        </p>
+      </div>
+    </div>
+
+    <!-- Group 2: Reward Functions -->
+    <div class="video-gallery-section" id="gallery-section-rewards">
+      <div class="video-gallery-container">
+        <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
+          <img src="assets/img/move_object.png" alt="Move Object Reward" style="height: 280px; width: auto; object-fit: contain; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,.15); margin: 0; flex: 0 0 auto;">
+          <img src="assets/img/upright_object.png" alt="Upright Object Reward" style="height: 280px; width: auto; object-fit: contain; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,.15); margin: 0; flex: 0 0 auto;">
+        </div>
+      </div>
+      <div class="gallery-caption-container">
+        <p class="figure-caption gallery-caption">
+          <b>Test-time Search Enables Generalization:</b> (left) Sumo (our method) generalizes zero-shot to new objects without additional training or changing the reward function by just updating the model online. Hierarchical RL trained on moving a box performs well on the box task, but fails to generalize other shapes, weights, and geometires despite domain randomization.
+          (right) With Sumo, we can change the objective at test time to achieve new behaviors. Here, we replace the goal reward with an orientation reward to enable object upright behaviors. The same hierarchical RL policy on the move objective cannot be easily steered to achieve a new objective.
+        </p>
+      </div>
+    </div>
+
+    <!-- Group 3: Push Tasks -->
+    <div class="video-gallery-section" id="gallery-section-push-tasks">
+      <div class="video-gallery-container">
+        <!-- First row: 3 videos -->
+        <div class="video-gallery" id="push-row-1" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+          <video class="gallery-video" src="assets/analysis/spot_tire_push.mp4" autoplay muted playsinline loop></video>
+          <video class="gallery-video" src="assets/analysis/spot_cone_push.mp4" autoplay muted playsinline loop></video>
+          <video class="gallery-video" src="assets/analysis/spot_chair_push.mp4" autoplay muted playsinline loop></video>
+        </div>
+        <!-- Second row: 2 videos -->
+        <div class="video-gallery" id="push-row-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+          <video class="gallery-video" src="assets/analysis/spot_box_push.mp4" autoplay muted playsinline loop></video>
+          <video class="gallery-video" src="assets/analysis/spot_rack_push.mp4" autoplay muted playsinline loop></video>
+        </div>
+      </div>
+      <div class="gallery-caption-container">
+        <p class="figure-caption gallery-caption">
+          <b>Object Move Tasks</b> Spot robot moves a tire, a traffic cone, a chair, a box, and a tire rack to the goal location all using the exact same reward function and optimizer. 
+        </p>
+      </div>
+    </div>
+
+    <!-- Group 4: Upright Tasks -->
+    <div class="video-gallery-section" id="gallery-section-upright-tasks">
+      <div class="video-gallery-container">
+        <!-- First row: 3 videos -->
+        <div class="video-gallery" id="upright-row-1" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+          <video class="gallery-video" src="assets/analysis/spot_tire_upright.mp4" autoplay muted playsinline loop></video>
+          <video class="gallery-video" src="assets/analysis/spot_cone_upright.mp4" autoplay muted playsinline loop></video>
+          <video class="gallery-video" src="assets/analysis/spot_chair_upright.mp4" autoplay muted playsinline loop></video>
+        </div>
+        <!-- Second row: 2 videos -->
+        <div class="video-gallery" id="upright-row-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+          <video class="gallery-video" src="assets/analysis/spot_box_upright.mp4" autoplay muted playsinline loop></video>
+          <video class="gallery-video" src="assets/analysis/spot_rack_upright.mp4" autoplay muted playsinline loop></video>
+        </div>
+      </div>
+      <div class="gallery-caption-container">
+        <p class="figure-caption gallery-caption">
+          <b>Object Upright Tasks</b> Spot robot can upright a tire, a traffic cone, a chair, a box, and a tire rack by replacing a simple objective term in the reward function from above.
+        </p>
+      </div>
+    </div>
+    <!-- End Experimental Analysis Section -->
+
+    <!-- Ablations Section - TODO: Add content later -->
+    <!-- <div class="tagline" id="ablations">Ablations</div>
+    <div class="section">
+      <p>TODO: Add SUMO ablations content</p>
+    </div> -->
+    <!-- Failures Section - TODO: Add content later -->
+    <!-- <div class="tagline" id="failures">Failures</div>
+    <div class="section">
+      <p>TODO: Add SUMO failure cases content</p>
+    </div> -->
+
+    <!-- Contact Points Section - TODO: Add content later -->
+    <!-- <div class="tagline" id="contact-points">Contact Points Planning</div>
+    <div class="section">
+      <p>TODO: Add SUMO contact points content</p>
+    </div> -->
+
+    <!-- Language Instructions Section - TODO: Add content later -->
+    <!-- <div class="tagline" id="language-instructions">Language Instructions</div>
+    <div class="section">
+      <p>TODO: Add SUMO language instructions content</p>
+    </div> -->
+    
+  <!-- TODO: Remove or replace this section with SUMO-specific integrations -->
+  <!-- <div class="tagline" id="integrations">Integrations</div>
+  <div class="section">
+    <p>
+      [Add any SUMO-specific integrations or extensions here]
+    </p>
+  </div>
+  <div class="quick-links">
+    [Add relevant links]
+  </div> -->
+
+    <!-- BibTeX Section -->
+    <div class="tagline" id="bibtex">BibTeX</div>
+    <div class="section" style="background-color: #f5f5f5; padding: 20px; border-radius: 5px;">
+      <pre style="margin: 0; white-space: pre-wrap; font-family: monospace; font-size: 12px;">
+      <!-- TODO: Update with SUMO citation -->
+      @article{2025sumo,
+        title={Sumo: Dynamic and Generalizable Whole-Body Loco-Manipulation},
+        author={[Authors to be added]},
+        journal={[Journal/Conference to be added]},
+        year={2025}
+        }</pre>
+    </div>
+    
+    <!-- End of main content -->
+    </main>
+    <footer class="footer">Some website materials are adapted from  <a href="https://www.videomimic.net/" target="_blank">VideoMimic</a> and <a href="https://transic-robot.github.io/" target="_blank">TRANSIC</a></footer>
+  </div>
+
+  <!-- ============================================================ -->
+  <!--  JS                                                          -->
+  <!-- ============================================================ -->
+  <script src="assets/js/password.js"></script>
+  <script src="assets/js/full_screen_video.js"></script>
+  <script src="assets/js/scroll_button.js"></script>
+  <script>
+    // Lazy loading for gallery videos only
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create intersection observer
+      const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const video = entry.target;
+            // Start playing when video comes into view
+            if (video.paused) {
+              video.play().catch(e => console.log('Video play failed:', e));
+            }
+          } else {
+            const video = entry.target;
+            // Pause when video goes out of view (saves bandwidth)
+            if (!video.paused) {
+              video.pause();
+            }
+          }
+        });
+      }, {
+        threshold: 0.2 // Start playing when 20% of video is visible
+      });
+
+      // Apply lazy loading only to gallery videos (not hero or main video)
+      const galleryVideos = document.querySelectorAll('.gallery-video');
+      galleryVideos.forEach(video => {
+        // Remove autoplay attribute and observe
+        video.removeAttribute('autoplay');
+        videoObserver.observe(video);
+        
+        // Set up video to be ready to play
+        video.load();
+      });
+    });
+  </script>
+</body>
+</html>
