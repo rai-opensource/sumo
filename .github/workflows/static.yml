@@ -34,6 +34,7 @@ jobs:
         with:
           lfs: true
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
