@@ -42,3 +42,5 @@ src/assets/hardware_demo/tire[[:space:]]upright.mp4 filter=lfs diff=lfs merge=lf
 src/assets/hardware_demo/traffic[[:space:]]cone[[:space:]]upright.mp4 filter=lfs diff=lfs merge=lfs -text
 src/assets/hardware_demo/rugged[[:space:]]box[[:space:]]push.mp4 filter=lfs diff=lfs merge=lfs -text
 src/assets/hardware_demo/tire[[:space:]]rack[[:space:]]drag.mp4 filter=lfs diff=lfs merge=lfs -text
+src/assets/large_videos/summary_balanced.mp4 filter=lfs diff=lfs merge=lfs -text
+src/assets/large_videos/sumo_demo_balanced.mp4 filter=lfs diff=lfs merge=lfs -text
