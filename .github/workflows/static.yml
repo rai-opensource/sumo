@@ -32,9 +32,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          lfs: true
+          lfs: false
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Cache LFS objects
+        uses: actions/cache@v4
+        with:
+          path: .git/lfs
+          key: lfs-${{ hashFiles('.gitattributes') }}
+          restore-keys: lfs-
+      - name: Pull LFS
+        run: |
+          git lfs install
+          git lfs pull
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
