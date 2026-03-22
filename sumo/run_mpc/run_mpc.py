@@ -19,6 +19,7 @@ import sumo.tasks  # noqa: F401 -- register all sumo tasks
 from sumo.app.dora.g1_simulation import G1Simulation
 from sumo.controller import Controller, ControllerConfig
 from sumo.utils.extensions import require_g1_extensions, require_mujoco_extensions
+from sumo.utils.mujoco import G1RolloutBackend
 
 
 @dataclass
@@ -247,7 +248,9 @@ def run_mpc(config: RunMPCConfig) -> list[dict]:
     # Create controller
     controller_config = ControllerConfig()
     controller_config.set_override(config.init_task)
-    controller = Controller(controller_config, task, optimizer)
+    controller = Controller(
+        controller_config, task, optimizer, custom_rollout_backends={"mujoco_g1": G1RolloutBackend}
+    )
 
     # Set up visualization
     viser_model = None
