@@ -1,0 +1,18 @@
+
+<mujoco model="table_short">
+<!-- Copyright (c) 2025 Boston Dynamics AI Institute LLC. All rights reserved. -->
+  <worldbody>
+    <body name="table_short" pos="0 0 0">
+      <joint name="table_short_joint" type="free" limited="false"/>
+      <inertial pos="0 0 0" mass="10" diaginertia="0.681 0.681 0.951"/>
+
+      <geom name="tabletop" type="box" size="0.4 0.4 0.01" pos="0 0 0.51"/>
+      <geom name="leg1" type="cylinder" size="0.04 0.25" pos="0.35 0.35 0.25"/>
+      <geom name="leg2" type="cylinder" size="0.04 0.25" pos="-0.35 0.35 0.25"/>
+      <geom name="leg3" type="cylinder" size="0.04 0.25" pos="0.35 -0.35 0.25"/>
+      <geom name="leg4" type="cylinder" size="0.04 0.25" pos="-0.35 -0.35 0.25"/>
+
+      <site name="site_object" pos="0 0 0" size="0.01"/>
+    </body>
+  </worldbody>
+</mujoco>

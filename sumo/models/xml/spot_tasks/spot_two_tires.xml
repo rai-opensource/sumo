@@ -1,0 +1,234 @@
+<mujoco model="spot_two_tires">
+<!-- Copyright (c) 2024 Boston Dynamics AI Institute LLC. All rights reserved. -->
+  <include file="../spot_components/default.xml" />
+  <include file="../spot_components/assets.xml" />
+  <include file="../objects/tire/tire_rubber_defs.xml" />
+
+  <worldbody>
+    <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 5" dir="0 0 -1" castshadow="false"/>
+    <light directional="true" diffuse=".6 .6 .6" specular="0.2 0.2 0.2" pos="0 0 4" dir="0 0 -1"/>
+
+    <geom name="ground" type="plane" size="10 10 0.01" class="collision" priority="5" friction="0.7" material="blue_grid"/>
+
+    <body name="body" pos="0 0 0.7">
+      <include file="../spot_components/body.xml" />
+      <include file="../spot_components/legs.xml" />
+      <include file="../spot_components/arm.xml" />
+    </body>
+
+    <!-- First tire (bottom tire for stacking) -->
+    <body name="tire_rubber">
+      <joint name="tire_rubber_joint" type="free"/>
+      <inertial pos="0 0 0" mass="15.3" diaginertia="0.57 0.96 0.57"/>
+
+      <geom name="object_primitive_approx" type="cylinder" class="tire_visual" size="0.33 0.17" quat="1 1 0 0" rgba="0 0 0 0.5"/>
+      <geom name="tire_rubber_visual" type="mesh" class="tire_visual" mesh="tire_visual" material="tire_black"/>
+      <geom name="tire_rubber_0_collision" type="mesh" class="tire_collision" mesh="tire_0_collision"/>
+      <geom name="tire_rubber_1_collision" type="mesh" class="tire_collision" mesh="tire_1_collision"/>
+      <geom name="tire_rubber_2_collision" type="mesh" class="tire_collision" mesh="tire_2_collision"/>
+      <geom name="tire_rubber_3_collision" type="mesh" class="tire_collision" mesh="tire_3_collision"/>
+      <geom name="tire_rubber_4_collision" type="mesh" class="tire_collision" mesh="tire_4_collision"/>
+      <geom name="tire_rubber_5_collision" type="mesh" class="tire_collision" mesh="tire_5_collision"/>
+      <geom name="tire_rubber_6_collision" type="mesh" class="tire_collision" mesh="tire_6_collision"/>
+      <geom name="tire_rubber_7_collision" type="mesh" class="tire_collision" mesh="tire_7_collision"/>
+      <geom name="tire_rubber_8_collision" type="mesh" class="tire_collision" mesh="tire_8_collision"/>
+      <geom name="tire_rubber_9_collision" type="mesh" class="tire_collision" mesh="tire_9_collision"/>
+      <geom name="tire_rubber_10_collision" type="mesh" class="tire_collision" mesh="tire_10_collision"/>
+      <geom name="tire_rubber_11_collision" type="mesh" class="tire_collision" mesh="tire_11_collision"/>
+      <geom name="tire_rubber_12_collision" type="mesh" class="tire_collision" mesh="tire_12_collision"/>
+      <geom name="tire_rubber_13_collision" type="mesh" class="tire_collision" mesh="tire_13_collision"/>
+      <geom name="tire_rubber_14_collision" type="mesh" class="tire_collision" mesh="tire_14_collision"/>
+      <geom name="tire_rubber_15_collision" type="mesh" class="tire_collision" mesh="tire_15_collision"/>
+      <geom name="tire_rubber_16_collision" type="mesh" class="tire_collision" mesh="tire_16_collision"/>
+      <geom name="tire_rubber_17_collision" type="mesh" class="tire_collision" mesh="tire_17_collision"/>
+      <geom name="tire_rubber_18_collision" type="mesh" class="tire_collision" mesh="tire_18_collision"/>
+      <geom name="tire_rubber_19_collision" type="mesh" class="tire_collision" mesh="tire_19_collision"/>
+      <geom name="tire_rubber_20_collision" type="mesh" class="tire_collision" mesh="tire_20_collision"/>
+      <geom name="tire_rubber_21_collision" type="mesh" class="tire_collision" mesh="tire_21_collision"/>
+      <geom name="tire_rubber_22_collision" type="mesh" class="tire_collision" mesh="tire_22_collision"/>
+      <geom name="tire_rubber_23_collision" type="mesh" class="tire_collision" mesh="tire_23_collision"/>
+      <geom name="tire_rubber_24_collision" type="mesh" class="tire_collision" mesh="tire_24_collision"/>
+      <geom name="tire_rubber_25_collision" type="mesh" class="tire_collision" mesh="tire_25_collision"/>
+      <geom name="tire_rubber_26_collision" type="mesh" class="tire_collision" mesh="tire_26_collision"/>
+      <geom name="tire_rubber_27_collision" type="mesh" class="tire_collision" mesh="tire_27_collision"/>
+      <geom name="tire_rubber_28_collision" type="mesh" class="tire_collision" mesh="tire_28_collision"/>
+      <geom name="tire_rubber_29_collision" type="mesh" class="tire_collision" mesh="tire_29_collision"/>
+      <geom name="tire_rubber_30_collision" type="mesh" class="tire_collision" mesh="tire_30_collision"/>
+      <geom name="tire_rubber_31_collision" type="mesh" class="tire_collision" mesh="tire_31_collision"/>
+      <geom name="tire_rubber_32_collision" type="mesh" class="tire_collision" mesh="tire_32_collision"/>
+      <geom name="tire_rubber_33_collision" type="mesh" class="tire_collision" mesh="tire_33_collision"/>
+      <geom name="tire_rubber_34_collision" type="mesh" class="tire_collision" mesh="tire_34_collision"/>
+      <geom name="tire_rubber_35_collision" type="mesh" class="tire_collision" mesh="tire_35_collision"/>
+      <geom name="tire_rubber_36_collision" type="mesh" class="tire_collision" mesh="tire_36_collision"/>
+      <geom name="tire_rubber_37_collision" type="mesh" class="tire_collision" mesh="tire_37_collision"/>
+      <geom name="tire_rubber_38_collision" type="mesh" class="tire_collision" mesh="tire_38_collision"/>
+      <geom name="tire_rubber_39_collision" type="mesh" class="tire_collision" mesh="tire_39_collision"/>
+      <geom name="tire_rubber_40_collision" type="mesh" class="tire_collision" mesh="tire_40_collision"/>
+      <geom name="tire_rubber_41_collision" type="mesh" class="tire_collision" mesh="tire_41_collision"/>
+      <geom name="tire_rubber_42_collision" type="mesh" class="tire_collision" mesh="tire_42_collision"/>
+      <geom name="tire_rubber_43_collision" type="mesh" class="tire_collision" mesh="tire_43_collision"/>
+      <geom name="tire_rubber_44_collision" type="mesh" class="tire_collision" mesh="tire_44_collision"/>
+      <geom name="tire_rubber_45_collision" type="mesh" class="tire_collision" mesh="tire_45_collision"/>
+      <geom name="tire_rubber_46_collision" type="mesh" class="tire_collision" mesh="tire_46_collision"/>
+      <geom name="tire_rubber_47_collision" type="mesh" class="tire_collision" mesh="tire_47_collision"/>
+      <geom name="tire_rubber_48_collision" type="mesh" class="tire_collision" mesh="tire_48_collision"/>
+      <geom name="tire_rubber_49_collision" type="mesh" class="tire_collision" mesh="tire_49_collision"/>
+      <geom name="tire_rubber_50_collision" type="mesh" class="tire_collision" mesh="tire_50_collision"/>
+      <geom name="tire_rubber_51_collision" type="mesh" class="tire_collision" mesh="tire_51_collision"/>
+      <geom name="tire_rubber_52_collision" type="mesh" class="tire_collision" mesh="tire_52_collision"/>
+      <geom name="tire_rubber_53_collision" type="mesh" class="tire_collision" mesh="tire_53_collision"/>
+      <geom name="tire_rubber_54_collision" type="mesh" class="tire_collision" mesh="tire_54_collision"/>
+      <geom name="tire_rubber_55_collision" type="mesh" class="tire_collision" mesh="tire_55_collision"/>
+      <geom name="tire_rubber_56_collision" type="mesh" class="tire_collision" mesh="tire_56_collision"/>
+      <geom name="tire_rubber_57_collision" type="mesh" class="tire_collision" mesh="tire_57_collision"/>
+      <geom name="tire_rubber_58_collision" type="mesh" class="tire_collision" mesh="tire_58_collision"/>
+      <geom name="tire_rubber_59_collision" type="mesh" class="tire_collision" mesh="tire_59_collision"/>
+      <geom name="tire_rubber_60_collision" type="mesh" class="tire_collision" mesh="tire_60_collision"/>
+      <geom name="tire_rubber_61_collision" type="mesh" class="tire_collision" mesh="tire_61_collision"/>
+      <geom name="tire_rubber_62_collision" type="mesh" class="tire_collision" mesh="tire_62_collision"/>
+      <geom name="tire_rubber_63_collision" type="mesh" class="tire_collision" mesh="tire_63_collision"/>
+      <geom name="tire_rubber_64_collision" type="mesh" class="tire_collision" mesh="tire_64_collision"/>
+      <geom name="tire_rubber_65_collision" type="mesh" class="tire_collision" mesh="tire_65_collision"/>
+      <geom name="tire_rubber_66_collision" type="mesh" class="tire_collision" mesh="tire_66_collision"/>
+      <geom name="tire_rubber_67_collision" type="mesh" class="tire_collision" mesh="tire_67_collision"/>
+      <geom name="tire_rubber_68_collision" type="mesh" class="tire_collision" mesh="tire_68_collision"/>
+      <geom name="tire_rubber_69_collision" type="mesh" class="tire_collision" mesh="tire_69_collision"/>
+      <geom name="tire_rubber_70_collision" type="mesh" class="tire_collision" mesh="tire_70_collision"/>
+      <geom name="tire_rubber_71_collision" type="mesh" class="tire_collision" mesh="tire_71_collision"/>
+      <geom name="tire_rubber_72_collision" type="mesh" class="tire_collision" mesh="tire_72_collision"/>
+      <geom name="tire_rubber_73_collision" type="mesh" class="tire_collision" mesh="tire_73_collision"/>
+      <geom name="tire_rubber_74_collision" type="mesh" class="tire_collision" mesh="tire_74_collision"/>
+      <geom name="tire_rubber_75_collision" type="mesh" class="tire_collision" mesh="tire_75_collision"/>
+      <geom name="tire_rubber_76_collision" type="mesh" class="tire_collision" mesh="tire_76_collision"/>
+      <geom name="tire_rubber_77_collision" type="mesh" class="tire_collision" mesh="tire_77_collision"/>
+      <geom name="tire_rubber_78_collision" type="mesh" class="tire_collision" mesh="tire_78_collision"/>
+      <geom name="tire_rubber_79_collision" type="mesh" class="tire_collision" mesh="tire_79_collision"/>
+      <geom name="tire_rubber_80_collision" type="mesh" class="tire_collision" mesh="tire_80_collision"/>
+      <site name="trace_tire_rubber" pos="0 0 0" size="0.01"/>
+      <site name="site_object" pos="0 0 0" size="0.01"/>
+    </body>
+
+    <!-- Second tire (top tire for stacking) -->
+    <body name="tire_rubber_2">
+      <joint name="tire_rubber_2_joint" type="free"/>
+      <inertial pos="0 0 0" mass="15.3" diaginertia="0.57 0.96 0.57"/>
+
+      <geom name="object_primitive_approx_2" type="cylinder" class="tire_visual" size="0.33 0.17" quat="1 1 0 0" rgba="0 0 0 0.5"/>
+      <geom name="tire_rubber_visual_2" type="mesh" class="tire_visual" mesh="tire_visual" material="tire_black"/>
+      <geom name="tire_rubber_2_0_collision" type="mesh" class="tire_collision" mesh="tire_0_collision"/>
+      <geom name="tire_rubber_2_1_collision" type="mesh" class="tire_collision" mesh="tire_1_collision"/>
+      <geom name="tire_rubber_2_2_collision" type="mesh" class="tire_collision" mesh="tire_2_collision"/>
+      <geom name="tire_rubber_2_3_collision" type="mesh" class="tire_collision" mesh="tire_3_collision"/>
+      <geom name="tire_rubber_2_4_collision" type="mesh" class="tire_collision" mesh="tire_4_collision"/>
+      <geom name="tire_rubber_2_5_collision" type="mesh" class="tire_collision" mesh="tire_5_collision"/>
+      <geom name="tire_rubber_2_6_collision" type="mesh" class="tire_collision" mesh="tire_6_collision"/>
+      <geom name="tire_rubber_2_7_collision" type="mesh" class="tire_collision" mesh="tire_7_collision"/>
+      <geom name="tire_rubber_2_8_collision" type="mesh" class="tire_collision" mesh="tire_8_collision"/>
+      <geom name="tire_rubber_2_9_collision" type="mesh" class="tire_collision" mesh="tire_9_collision"/>
+      <geom name="tire_rubber_2_10_collision" type="mesh" class="tire_collision" mesh="tire_10_collision"/>
+      <geom name="tire_rubber_2_11_collision" type="mesh" class="tire_collision" mesh="tire_11_collision"/>
+      <geom name="tire_rubber_2_12_collision" type="mesh" class="tire_collision" mesh="tire_12_collision"/>
+      <geom name="tire_rubber_2_13_collision" type="mesh" class="tire_collision" mesh="tire_13_collision"/>
+      <geom name="tire_rubber_2_14_collision" type="mesh" class="tire_collision" mesh="tire_14_collision"/>
+      <geom name="tire_rubber_2_15_collision" type="mesh" class="tire_collision" mesh="tire_15_collision"/>
+      <geom name="tire_rubber_2_16_collision" type="mesh" class="tire_collision" mesh="tire_16_collision"/>
+      <geom name="tire_rubber_2_17_collision" type="mesh" class="tire_collision" mesh="tire_17_collision"/>
+      <geom name="tire_rubber_2_18_collision" type="mesh" class="tire_collision" mesh="tire_18_collision"/>
+      <geom name="tire_rubber_2_19_collision" type="mesh" class="tire_collision" mesh="tire_19_collision"/>
+      <geom name="tire_rubber_2_20_collision" type="mesh" class="tire_collision" mesh="tire_20_collision"/>
+      <geom name="tire_rubber_2_21_collision" type="mesh" class="tire_collision" mesh="tire_21_collision"/>
+      <geom name="tire_rubber_2_22_collision" type="mesh" class="tire_collision" mesh="tire_22_collision"/>
+      <geom name="tire_rubber_2_23_collision" type="mesh" class="tire_collision" mesh="tire_23_collision"/>
+      <geom name="tire_rubber_2_24_collision" type="mesh" class="tire_collision" mesh="tire_24_collision"/>
+      <geom name="tire_rubber_2_25_collision" type="mesh" class="tire_collision" mesh="tire_25_collision"/>
+      <geom name="tire_rubber_2_26_collision" type="mesh" class="tire_collision" mesh="tire_26_collision"/>
+      <geom name="tire_rubber_2_27_collision" type="mesh" class="tire_collision" mesh="tire_27_collision"/>
+      <geom name="tire_rubber_2_28_collision" type="mesh" class="tire_collision" mesh="tire_28_collision"/>
+      <geom name="tire_rubber_2_29_collision" type="mesh" class="tire_collision" mesh="tire_29_collision"/>
+      <geom name="tire_rubber_2_30_collision" type="mesh" class="tire_collision" mesh="tire_30_collision"/>
+      <geom name="tire_rubber_2_31_collision" type="mesh" class="tire_collision" mesh="tire_31_collision"/>
+      <geom name="tire_rubber_2_32_collision" type="mesh" class="tire_collision" mesh="tire_32_collision"/>
+      <geom name="tire_rubber_2_33_collision" type="mesh" class="tire_collision" mesh="tire_33_collision"/>
+      <geom name="tire_rubber_2_34_collision" type="mesh" class="tire_collision" mesh="tire_34_collision"/>
+      <geom name="tire_rubber_2_35_collision" type="mesh" class="tire_collision" mesh="tire_35_collision"/>
+      <geom name="tire_rubber_2_36_collision" type="mesh" class="tire_collision" mesh="tire_36_collision"/>
+      <geom name="tire_rubber_2_37_collision" type="mesh" class="tire_collision" mesh="tire_37_collision"/>
+      <geom name="tire_rubber_2_38_collision" type="mesh" class="tire_collision" mesh="tire_38_collision"/>
+      <geom name="tire_rubber_2_39_collision" type="mesh" class="tire_collision" mesh="tire_39_collision"/>
+      <geom name="tire_rubber_2_40_collision" type="mesh" class="tire_collision" mesh="tire_40_collision"/>
+      <geom name="tire_rubber_2_41_collision" type="mesh" class="tire_collision" mesh="tire_41_collision"/>
+      <geom name="tire_rubber_2_42_collision" type="mesh" class="tire_collision" mesh="tire_42_collision"/>
+      <geom name="tire_rubber_2_43_collision" type="mesh" class="tire_collision" mesh="tire_43_collision"/>
+      <geom name="tire_rubber_2_44_collision" type="mesh" class="tire_collision" mesh="tire_44_collision"/>
+      <geom name="tire_rubber_2_45_collision" type="mesh" class="tire_collision" mesh="tire_45_collision"/>
+      <geom name="tire_rubber_2_46_collision" type="mesh" class="tire_collision" mesh="tire_46_collision"/>
+      <geom name="tire_rubber_2_47_collision" type="mesh" class="tire_collision" mesh="tire_47_collision"/>
+      <geom name="tire_rubber_2_48_collision" type="mesh" class="tire_collision" mesh="tire_48_collision"/>
+      <geom name="tire_rubber_2_49_collision" type="mesh" class="tire_collision" mesh="tire_49_collision"/>
+      <geom name="tire_rubber_2_50_collision" type="mesh" class="tire_collision" mesh="tire_50_collision"/>
+      <geom name="tire_rubber_2_51_collision" type="mesh" class="tire_collision" mesh="tire_51_collision"/>
+      <geom name="tire_rubber_2_52_collision" type="mesh" class="tire_collision" mesh="tire_52_collision"/>
+      <geom name="tire_rubber_2_53_collision" type="mesh" class="tire_collision" mesh="tire_53_collision"/>
+      <geom name="tire_rubber_2_54_collision" type="mesh" class="tire_collision" mesh="tire_54_collision"/>
+      <geom name="tire_rubber_2_55_collision" type="mesh" class="tire_collision" mesh="tire_55_collision"/>
+      <geom name="tire_rubber_2_56_collision" type="mesh" class="tire_collision" mesh="tire_56_collision"/>
+      <geom name="tire_rubber_2_57_collision" type="mesh" class="tire_collision" mesh="tire_57_collision"/>
+      <geom name="tire_rubber_2_58_collision" type="mesh" class="tire_collision" mesh="tire_58_collision"/>
+      <geom name="tire_rubber_2_59_collision" type="mesh" class="tire_collision" mesh="tire_59_collision"/>
+      <geom name="tire_rubber_2_60_collision" type="mesh" class="tire_collision" mesh="tire_60_collision"/>
+      <geom name="tire_rubber_2_61_collision" type="mesh" class="tire_collision" mesh="tire_61_collision"/>
+      <geom name="tire_rubber_2_62_collision" type="mesh" class="tire_collision" mesh="tire_62_collision"/>
+      <geom name="tire_rubber_2_63_collision" type="mesh" class="tire_collision" mesh="tire_63_collision"/>
+      <geom name="tire_rubber_2_64_collision" type="mesh" class="tire_collision" mesh="tire_64_collision"/>
+      <geom name="tire_rubber_2_65_collision" type="mesh" class="tire_collision" mesh="tire_65_collision"/>
+      <geom name="tire_rubber_2_66_collision" type="mesh" class="tire_collision" mesh="tire_66_collision"/>
+      <geom name="tire_rubber_2_67_collision" type="mesh" class="tire_collision" mesh="tire_67_collision"/>
+      <geom name="tire_rubber_2_68_collision" type="mesh" class="tire_collision" mesh="tire_68_collision"/>
+      <geom name="tire_rubber_2_69_collision" type="mesh" class="tire_collision" mesh="tire_69_collision"/>
+      <geom name="tire_rubber_2_70_collision" type="mesh" class="tire_collision" mesh="tire_70_collision"/>
+      <geom name="tire_rubber_2_71_collision" type="mesh" class="tire_collision" mesh="tire_71_collision"/>
+      <geom name="tire_rubber_2_72_collision" type="mesh" class="tire_collision" mesh="tire_72_collision"/>
+      <geom name="tire_rubber_2_73_collision" type="mesh" class="tire_collision" mesh="tire_73_collision"/>
+      <geom name="tire_rubber_2_74_collision" type="mesh" class="tire_collision" mesh="tire_74_collision"/>
+      <geom name="tire_rubber_2_75_collision" type="mesh" class="tire_collision" mesh="tire_75_collision"/>
+      <geom name="tire_rubber_2_76_collision" type="mesh" class="tire_collision" mesh="tire_76_collision"/>
+      <geom name="tire_rubber_2_77_collision" type="mesh" class="tire_collision" mesh="tire_77_collision"/>
+      <geom name="tire_rubber_2_78_collision" type="mesh" class="tire_collision" mesh="tire_78_collision"/>
+      <geom name="tire_rubber_2_79_collision" type="mesh" class="tire_collision" mesh="tire_79_collision"/>
+      <geom name="tire_rubber_2_80_collision" type="mesh" class="tire_collision" mesh="tire_80_collision"/>
+      <site name="trace_tire_rubber_2" pos="0 0 0" size="0.01"/>
+      <site name="site_top_tire" pos="0 0 0" size="0.01"/>
+    </body>
+  </worldbody>
+
+  <include file="../spot_components/actuator.xml" />
+  <include file="../spot_components/sensor.xml" />
+  <include file="../spot_components/contact.xml" />
+  <sensor>
+    <!-- Sensors for reward computation -->
+    <framepos name="base_position" objtype="site" objname="site_body" />
+    <framexaxis name="base_xaxis" objtype="body" objname="body" />
+    <frameyaxis name="base_yaxis" objtype="body" objname="body" />
+    <framezaxis name="base_zaxis" objtype="body" objname="body" />
+
+    <!-- Foot position sensors -->
+    <framepos name="fl_pos" objtype="site" objname="site_front_left" />
+    <framepos name="fr_pos" objtype="site" objname="site_front_right" />
+    <framepos name="hl_pos" objtype="site" objname="site_rear_left" />
+    <framepos name="hr_pos" objtype="site" objname="site_rear_right" />
+
+    <!-- Center of mass and velocity sensors -->
+    <subtreecom name="base_subtreecom" body="body"/>
+    <subtreelinvel name="base_subtreelinvel" body="body"/>
+    <subtreeangmom name="base_angmom" body="body"/>
+
+    <!-- Trace sensors -->
+    <framepos name="trace_body" objtype="site" objname="site_body"/>
+    <framepos name="trace_fngr_site" objtype="site" objname="site_arm_link_fngr"/>
+    <framepos name="trace_tire" objtype="site" objname="trace_tire_rubber"/>
+    <framepos name="trace_tire_2" objtype="site" objname="trace_tire_rubber_2"/>
+
+    <!-- Top tire y-axis for orientation alignment -->
+    <frameyaxis name="top_tire_y_axis" objtype="site" objname="site_top_tire"/>
+  </sensor>
+</mujoco>

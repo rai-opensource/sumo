@@ -1,0 +1,61 @@
+<mujoco model="g1_box_carry">
+  <include file="g1.xml"/>
+
+  <asset>
+    <material name="box" rgba="0.8 0.2 0.1 1"/>
+    <material name="platform" rgba="0.5 0.5 0.5 1"/>
+  </asset>
+
+  <worldbody>
+    <!-- First Platform (starting platform with box) -->
+    <body name="platform_start" pos="0.8 0 0.58">
+      <geom name="platform_start_collision" type="box" size="0.2 0.5 0.05" group="3" rgba="0.5 0.5 0.5 1"/>
+      <geom name="platform_start_visual" type="box" size="0.2 0.5 0.05" contype="0" conaffinity="0" group="2" material="platform"/>
+      <!-- Support leg -->
+      <geom name="platform_start_leg" type="box" size="0.05 0.05 0.38" pos="0 0 -0.38" group="3" rgba="0.3 0.3 0.3 1"/>
+      <site name="platform_start_center" pos="0 0 0.05" size="0.01"/>
+    </body>
+
+    <!-- Second Platform (goal platform) -->
+    <body name="platform_goal" pos="-0.8 0.0 0.58">
+      <geom name="platform_goal_collision" type="box" size="0.3 0.5 0.05" group="3" rgba="0.5 0.5 0.5 1"/>
+      <geom name="platform_goal_visual" type="box" size="0.3 0.5 0.05" contype="0" conaffinity="0" group="2" material="platform"/>
+      <!-- Support leg -->
+      <geom name="platform_goal_leg" type="box" size="0.05 0.05 0.38" pos="0 0 -0.38" group="3" rgba="0.3 0.3 0.3 1"/>
+      <site name="platform_goal_center" pos="0 0 0.05" size="0.01"/>
+    </body>
+
+    <!-- Small Box (object to carry) -->
+    <body name="carry_box" pos="0.8 0 0.73">
+      <joint name="box_joint" type="free"/>
+      <inertial pos="0 0 0" mass="0.5" diaginertia="0.0083 0.0083 0.0083"/>
+      <!-- Box dimensions: 30cm x 30cm x 30cm -->
+      <geom name="carry_box_collision" type="box" size="0.15 0.15 0.15" group="3" rgba="0.8 0.2 0.1 0.8"/>
+      <geom name="carry_box_visual" type="box" size="0.15 0.15 0.15" contype="0" conaffinity="0" group="2" material="box"/>
+
+      <!-- Center of box -->
+      <site name="trace_carry_box" pos="0 0 0" size="0.01"/>
+      <site name="site_carry_box" pos="0 0 0" size="0.01"/>
+
+      <!-- Sites on box faces for grasping (left and right faces only) -->
+      <site name="box_face_left" pos="0.15 -0.15 0" size="0.03" rgba="0 1 0 1" group="5"/>
+      <site name="box_face_right" pos="0.15 0.15 0" size="0.03" rgba="0 1 0 1" group="5"/>
+    </body>
+  </worldbody>
+
+  <sensor>
+    <framepos name="trace_pelvis" objtype="site" objname="site_pelvis"/>
+    <framepos name="trace_carry_box" objtype="site" objname="trace_carry_box"/>
+    <framepos name="trace_left_palm" objtype="site" objname="left_palm"/>
+    <framepos name="trace_right_palm" objtype="site" objname="right_palm"/>
+    <framepos name="platform_start_pos" objtype="site" objname="platform_start_center"/>
+    <framepos name="platform_goal_pos" objtype="site" objname="platform_goal_center"/>
+
+    <!-- Box face sensors for grasping -->
+    <framepos name="box_face_left_pos" objtype="site" objname="box_face_left"/>
+    <framepos name="box_face_right_pos" objtype="site" objname="box_face_right"/>
+
+    <!-- Box orientation sensor (Z-axis to check if upright) -->
+    <framezaxis name="box_z_axis" objtype="site" objname="site_carry_box"/>
+  </sensor>
+</mujoco>

@@ -1,0 +1,203 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[project]
+name = "sumo"
+version = "0.0.1"
+dependencies = [
+    "judo-rai @ git+https://github.com/bdaiinstitute/judo.git@dta/fix_for_sumo",
+    "numpy",
+    "mujoco",
+    "h5py",
+    "tyro",
+    "tqdm",
+    "scipy",
+]
+
+[project.scripts]
+sumo = "sumo.cli:app"
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["sumo"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"sumo/models" = "sumo/models"
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-64", "osx-arm64"]
+
+[tool.pixi.pypi-dependencies]
+sumo = { path = ".", editable = true }
+
+[tool.pixi.dependencies]
+python = ">=3.10"
+h5py = ">=3.14.0,<4"
+tyro = ">=1.0.9,<2"
+
+[tool.pixi.environments]
+default = { features = ["dev", "cpp"], solve-group = "default" }
+dev = { features = ["dev", "cpp"], solve-group = "default" }
+
+[tool.pixi.feature.dev.dependencies]
+pytest = "*"
+ruff = "*"
+onnxruntime = ">=1.22.0,<2"
+onnxruntime-cpp = ">=1.22.0,<2"
+pyright = ">=1.1.408,<2"
+pre-commit = ">=4.5.1,<5"
+pybind11-stubgen = ">=2.5.5,<3"
+
+[tool.pixi.feature.cpp.dependencies]
+cmake = "*"
+ninja = "*"
+pybind11 = "*"
+cxx-compiler = "*"
+c-compiler = "*"
+eigen = "*"
+llvm-openmp = "*"
+
+[tool.pixi.feature.cpp.pypi-dependencies]
+g1-extensions = { path = "./g1_extensions", editable = true }
+
+[tool.pixi.feature.dev.tasks]
+sumo = "sumo"
+
+[tool.pixi.feature.dev.tasks.configure-judo-ext]
+cmd = """
+sh -c '
+if [ ! -d .judo-src ]; then
+  git clone --depth 1 --branch dta/fix_for_sumo https://github.com/bdaiinstitute/judo.git .judo-src
+fi &&
+sed -i.bak "s|libonnxruntime.so\\*|libonnxruntime.*|" .judo-src/mujoco_extensions/CMakeLists.txt &&
+mkdir -p .judo-src/build &&
+cmake -S .judo-src/mujoco_extensions -B .judo-src/build \
+  -G Ninja \
+  -DCMAKE_C_COMPILER=$CC \
+  -DCMAKE_CXX_COMPILER=$CXX \
+  -DPython_ROOT_DIR=$CONDA_PREFIX \
+  -DPython_EXECUTABLE=$CONDA_PREFIX/bin/python \
+  -Dpybind11_DIR=$(python -m pybind11 --cmakedir)
+'
+"""
+
+[tool.pixi.feature.dev.tasks.build-judo-ext]
+depends-on = ["configure-judo-ext"]
+cmd = """
+sh -c '
+ninja -C .judo-src/build &&
+SITE=$(python -c "import site; print(site.getsitepackages()[0])") &&
+SO=$(ls .judo-src/mujoco_extensions/policy_rollout/policy_rollout_pybind*.so 2>/dev/null | head -1) &&
+if [ -z "$SO" ]; then echo "ERROR: .so not found in .judo-src/mujoco_extensions/policy_rollout/"; exit 1; fi &&
+if [ "$(uname)" = "Darwin" ]; then
+  install_name_tool -add_rpath @loader_path/../../mujoco "$SO" 2>/dev/null || true
+fi &&
+cp "$SO" "$SITE/mujoco_extensions/policy_rollout/"
+'
+"""
+
+[tool.pixi.tasks]
+
+[tool.pixi.tasks.configure]
+cmd = """
+sh -c 'mkdir -p g1_extensions/build && \
+cmake -S g1_extensions -B g1_extensions/build \
+  -G Ninja \
+  -DPython_ROOT_DIR=$CONDA_PREFIX \
+  -DPython_EXECUTABLE=$CONDA_PREFIX/bin/python \
+  -Dpybind11_DIR=$(python -m pybind11 --cmakedir)'
+"""
+
+[tool.pixi.tasks.build-g1-ext]
+depends-on = ["configure"]
+cwd = "g1_extensions/build"
+cmd = "ninja _g1_extensions"
+
+[tool.pixi.tasks.build]
+depends-on = ["build-g1-ext", "build-judo-ext"]
+
+[tool.pixi.tasks.clean]
+cwd = "g1_extensions"
+cmd = "rm -rf build/"
+
+[tool.pytest.ini_options]
+markers = [
+    "g1_extensions: marks tests that require the optional g1_extensions extension",
+]
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ["g1_extensions", ".judo-src"]
+
+[tool.ruff.lint]
+pydocstyle.convention = "google"
+select = [
+    "ANN",  # annotations
+    "N",  # naming conventions
+    "D",  # docstrings
+    "B",  # flake8 bugbear
+    "E",  # pycodestyle errors
+    "F",  # Pyflakes rules
+    "I",  # isort formatting
+    "PLC",  # Pylint convention warnings
+    "PLE",  # Pylint errors
+    "PLR",  # Pylint refactor recommendations
+    "PLW",  # Pylint warnings
+]
+ignore = [
+    "ANN001",  # Missing type annotation for function argument
+    "ANN002",  # Missing type annotation for *args
+    "ANN003",  # Missing type annotation for **kwargs
+    "ANN201",  # Missing return type annotation for public function
+    "ANN202",  # Missing return type annotation for private function
+    "ANN204",  # Missing return type annotation for special method
+    "ANN206",  # Missing return type annotation for classmethod
+    "ANN401",  # Dynamically typed expressions (typing.Any) are disallowed
+    "D100",  # missing docstring in public module
+    "D101",  # missing docstring in public class
+    "D102",  # missing docstring in public method
+    "D103",  # missing docstring in public function
+    "D104",  # missing docstring in public package
+    "D105",  # missing docstring in magic method
+    "D107",  # missing docstring in __init__
+    "D203",  # blank line before class docstring
+    "D211",  # no blank line before class
+    "D212",  # multi-line docstring summary at first line
+    "D213",  # multi-line docstring summary at second line
+    "E741",  # Ambiguous variable name
+    "E501",  # Line too long
+    "E721",  # Do not compare types, use isinstance()
+    "F722",  # Forward annotation false positive from jaxtyping
+    "F821",  # Forward annotation false positive from jaxtyping
+    "N803",  # Argument name should be lowercase
+    "N806",  # Variable in function should be lowercase
+    "N812",  # lowercase imported as non-lowercase
+    "N817",  # CamelCase imported as acronym
+    "PLR0911",  # Too many return statements
+    "PLR0912",  # Too many branches
+    "PLR0913",  # Too many arguments in function definition
+    "PLR0915",  # Too many statements in function
+    "PLR2004",  # magic numbers
+    "PLC0415",  # import not at top-level (intentional lazy/conditional imports)
+    "E402",  # module-level import not at top of file (side-effect imports must run first)
+    "E731",  # lambda assignment (used for closures in _make_condition_checker)
+    "D415",  # first line of docstring should end with period
+    "N801",  # class name should use CapWords (POLICY_MODE is an intentional constant-style enum)
+    "PLW0108",  # unnecessary lambda (closures capturing variables are intentional)
+    "F841",  # local variable assigned but never used (sensor readouts kept for clarity)
+]
+
+[tool.pyright]
+include = ["sumo", "tests"]
+exclude = [
+    "**/__pycache__",
+]
+stubPath = "typings"
+reportAttributeAccessIssue = "warning"

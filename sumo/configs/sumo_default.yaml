@@ -1,0 +1,12 @@
+defaults:
+  - judo_dora
+
+task: spot_box_push
+
+node_definitions:
+  simulation:
+    _target_: sumo.app.dora.simulation.SimulationNode
+  visualization:
+    _target_: sumo.app.dora.visualization.VisualizationNode
+  controller:
+    _target_: sumo.app.dora.controller.ControllerNode

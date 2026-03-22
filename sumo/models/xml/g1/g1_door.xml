@@ -1,0 +1,59 @@
+<mujoco model="g1_door">
+  <include file="g1.xml"/>
+
+  <asset>
+    <material name="door" rgba="0.6 0.4 0.2 1"/>
+    <material name="frame" rgba="0.3 0.3 0.3 1"/>
+  </asset>
+
+  <worldbody>
+    <!-- Door Frame (static) -->
+    <!-- Left vertical post -->
+    <body name="door_frame_left" pos="0.5 -0.55 1.065">
+      <geom name="frame_left_collision" type="box" size="0.05 0.05 1.065" group="3" rgba="0.3 0.3 0.3 1"/>
+      <geom name="frame_left_visual" type="box" size="0.05 0.05 1.065" contype="0" conaffinity="0" group="2" material="frame"/>
+    </body>
+
+    <!-- Right vertical post -->
+    <body name="door_frame_right" pos="0.5 0.56 1.065">
+      <geom name="frame_right_collision" type="box" size="0.05 0.05 1.065" group="3" rgba="0.3 0.3 0.3 1"/>
+      <geom name="frame_right_visual" type="box" size="0.05 0.05 1.065" contype="0" conaffinity="0" group="2" material="frame"/>
+    </body>
+
+    <!-- Top horizontal post -->
+    <body name="door_frame_top" pos="0.5 0.005 2.18">
+      <geom name="frame_top_collision" type="box" size="0.05 0.61 0.05" group="3" rgba="0.3 0.3 0.3 1"/>
+      <geom name="frame_top_visual" type="box" size="0.05 0.61 0.05" contype="0" conaffinity="0" group="2" material="frame"/>
+    </body>
+
+    <!-- Door with hinge joint -->
+    <body name="door" pos="0.5 -0.455 1.015">
+      <!-- Hinge joint at the left edge of the door -->
+      <joint name="door_hinge" type="hinge" axis="0 0 1" pos="0 0 0" range="-1.571 0" damping="0.5" frictionloss="0.0" stiffness="3"/>
+
+      <!-- Door inertial properties -->
+      <inertial pos="0 0.455 0" mass="5" diaginertia="5 1 4"/>
+
+      <!-- Door geometry - collision -->
+      <geom name="door_collision" type="box" size="0.02 0.455 1.015" pos="0 0.455 0" group="3" rgba="0.6 0.4 0.2 0.8"/>
+
+      <!-- Door geometry - visual -->
+      <geom name="door_visual" type="box" size="0.02 0.455 1.015" pos="0 0.455 0" contype="0" conaffinity="0" group="2" material="door"/>
+
+      <!-- Door handle site (on the right side of the door) -->
+      <site name="door_handle" pos="0 0.85 0" size="0.03" rgba="1 1 0 1"/>
+
+      <!-- Trace site for door center -->
+      <site name="trace_door" pos="0 0.455 0" size="0.01"/>
+    </body>
+  </worldbody>
+
+  <sensor>
+    <framepos name="trace_pelvis" objtype="site" objname="site_pelvis"/>
+    <framepos name="trace_door" objtype="site" objname="trace_door"/>
+    <framepos name="trace_door_handle" objtype="site" objname="door_handle"/>
+    <framepos name="trace_left_palm" objtype="site" objname="left_palm"/>
+    <framepos name="trace_right_palm" objtype="site" objname="right_palm"/>
+    <jointpos name="door_hinge_pos" joint="door_hinge"/>
+  </sensor>
+</mujoco>

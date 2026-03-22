@@ -1,0 +1,140 @@
+<mujoco model="crowd_barrier">
+  <!-- Copyright (c) 2025 Boston Dynamics AI Institute LLC. All rights reserved. -->
+  <!-- Physical object: PLASTICADE Crowdcade Orange Deluxe Crowd Control Barricade -->
+  <!-- Purchase link: https://www.homedepot.com/p/PLASTICADE-Crowdcade-Orange-Deluxe-Crowd-Control-Barricade-2007-O/328010216 -->
+  <include file="crowd_barrier_defs.xml" />
+  <worldbody>
+      <body name="crowd_barrier" pos="0 0 0">
+            <joint name="crowd_barrier_joint" type="free"/>
+
+            <!-- Dimensions: 86.25" W x 42" H x ~14" D (2.191m x 1.067m x 0.356m) -->
+            <!-- Mass: 35 lbs = 15.876 kg -->
+            <!-- Center of mass at geometric center when upright (z = height/2 = 0.5335m) -->
+            <!-- Hollow plastic frame structure with mass concentrated at perimeter -->
+            <!-- Inertia tensor for hollow rectangular frame: -->
+            <!--   Ixx ≈ (1/12) * m * (d² + h²) * k = (1/12) * 15.876 * (0.356² + 1.067²) * 1.7 ≈ 2.65 -->
+            <!--   Iyy ≈ (1/12) * m * (w² + h²) * k = (1/12) * 15.876 * (2.191² + 1.067²) * 1.7 ≈ 8.65 -->
+            <!--   Izz ≈ (1/12) * m * (w² + d²) * k = (1/12) * 15.876 * (2.191² + 0.356²) * 1.7 ≈ 7.00 -->
+            <!--   where k ≈ 1.7 is the hollow frame correction factor -->
+            <inertial pos="0 0 0.3335" mass="15.8" diaginertia="2.85 13.36 11.08"/>
+
+            <!-- Visual mesh (temporarily disabled for debugging) -->
+            <geom name="crowd_barrier_visual" class="visual_barrier" type="mesh" mesh="crowd_barrier_visual_mesh" material="crowd_barrier_material"/>
+
+            <!-- Collision meshes (decomposed into sub-parts) - VISUALIZING FOR DEBUG -->
+            <!-- Replaced collision_1 and collision_2 with box primitives for better performance -->
+            <geom name="crowd_barrier_collision_1" type="box" class="collision_barrier" size="0.048 0.275 0.03" pos="0.529 -0.005 0.025" material="crowd_barrier_orange" friction="0.5 0.5" priority="6"/>
+            <geom name="crowd_barrier_collision_2" type="box" class="collision_barrier" size="0.053 0.276 0.03" pos="-0.513 -0.004 0.025" material="crowd_barrier_orange" friction="0.5 0.5" priority="6"/>
+            <!-- Simplified box geometry for main barrier structure -->
+            <!-- Barrier dimensions: 2.191m W x 1.067m H x 0.356m D -->
+            <!-- Tube diameter approximately 0.06m (0.03m half-size) -->
+
+            <!-- Top horizontal rail -->
+            <geom name="top_rail" type="box" class="collision_barrier"
+                  size="0.85 0.02 0.08" pos="0 0 0.92"
+                  material="crowd_barrier_orange"/>
+
+            <!-- Bottom horizontal rail -->
+            <geom name="bottom_rail" type="box" class="collision_barrier"
+                  size="0.85 0.02 0.08" pos="0 0 0.28"
+                  material="crowd_barrier_orange"/>
+
+            <!-- Left vertical post -->
+            <geom name="left_post" type="box" class="collision_barrier"
+                  size="0.03 0.02 0.4" pos="-0.83 0 0.6"
+                  material="crowd_barrier_orange"/>
+
+            <!-- Right vertical post -->
+            <geom name="right_post" type="box" class="collision_barrier"
+                  size="0.03 0.02 0.4" pos="0.84 0 0.60"
+                  material="crowd_barrier_orange"/>
+
+            <!-- Middle vertical supports (10 evenly spaced between left and right posts) -->
+            <!-- Left post at x=-0.82, right post at x=0.83, total span = 1.65m -->
+            <!-- Spacing between 10 supports: 1.65 / 11 = 0.15m -->
+            <geom name="middle_support_1" type="box" class="collision_barrier"
+                  size="0.025 0.025 0.3" pos="-0.67 0 0.60"
+                  material="crowd_barrier_orange"/>
+
+            <geom name="middle_support_2" type="box" class="collision_barrier"
+                  size="0.025 0.025 0.3" pos="-0.52 0 0.60"
+                  material="crowd_barrier_orange"/>
+
+            <geom name="middle_support_3" type="box" class="collision_barrier"
+                  size="0.025 0.025 0.3" pos="-0.37 0 0.60"
+                  material="crowd_barrier_orange"/>
+
+            <geom name="middle_support_4" type="box" class="collision_barrier"
+                  size="0.025 0.025 0.3" pos="-0.22 0 0.60"
+                  material="crowd_barrier_orange"/>
+
+            <geom name="middle_support_5" type="box" class="collision_barrier"
+                  size="0.025 0.025 0.3" pos="-0.07 0 0.60"
+                  material="crowd_barrier_orange"/>
+
+            <geom name="middle_support_6" type="box" class="collision_barrier"
+                  size="0.025 0.025 0.3" pos="0.08 0 0.60"
+                  material="crowd_barrier_orange"/>
+
+            <geom name="middle_support_7" type="box" class="collision_barrier"
+                  size="0.025 0.025 0.3" pos="0.23 0 0.60"
+                  material="crowd_barrier_orange"/>
+
+            <geom name="middle_support_8" type="box" class="collision_barrier"
+                  size="0.025 0.025 0.3" pos="0.38 0 0.60"
+                  material="crowd_barrier_orange"/>
+
+            <geom name="middle_support_9" type="box" class="collision_barrier"
+                  size="0.025 0.025 0.3" pos="0.53 0 0.60"
+                  material="crowd_barrier_orange"/>
+
+            <geom name="middle_support_10" type="box" class="collision_barrier"
+                  size="0.025 0.025 0.3" pos="0.68 0 0.60"
+                  material="crowd_barrier_orange"/>
+
+            <geom name="right_handle" type="box" class="collision_barrier"
+                  size="0.01 0.01 0.19" pos="-0.99 0 0.64"
+                  material="crowd_barrier_orange"/>
+
+            <geom name="left_connector_mid" type="box" class="collision_barrier"
+                  size="0.1 0.02 0.05" pos="0.91 0 0.62"
+                  material="crowd_barrier_orange"/>
+
+            <!-- Sites for sensors and tracing -->
+            <site name="trace_crowd_barrier" pos="0 0 0" size="0.01"/>
+            <site name="site_object" pos="0 0 0.5" size="0.01"/>
+
+            <!-- Sites for feet at base edges (width/2 = 2.191/2 = 1.096m from center) -->
+            <site name="site_foot_left" pos="-0.5 0 0.05" size="0.01"/>
+            <site name="site_foot_right" pos="0.5 0 0.05" size="0.01"/>
+
+            <!-- Sites for grasping - separated for different tasks -->
+
+            <!-- Drag task grasp sites at mid-height on left and right sides -->
+            <!-- Mid-height = 0.5335m (center of mass height) -->
+            <!-- Left/Right positions at edges: ±1.096m (half width) -->
+            <site name="site_grasp_drag_left" pos="-0.7 0 0.53335" size="0.01"/>
+            <site name="site_grasp_drag_right" pos="0.7 0 0.5335" size="0.01"/>
+
+            <!-- Upright task grasp sites at higher position for better leverage -->
+            <!-- Higher position = 0.8m for uprighting leverage -->
+            <site name="site_grasp_upright_left" pos="-1.2 0 0.8" size="0.01"/>
+            <site name="site_grasp_upright_right" pos="1.2 0 0.8" size="0.01"/>
+
+            <!-- Trace sites for visualization (using drag height for compatibility) -->
+            <site name="trace_grasp_left" pos="-0.7 0 0.5335" size="0.01"/>
+            <site name="trace_grasp_right" pos="0.7 0 0.5335" size="0.01"/>
+
+            <!-- Trace sites for upright visualization -->
+            <site name="trace_grasp_upright_left" pos="-1.2 0 0.8" size="0.01"/>
+            <site name="trace_grasp_upright_right" pos="1.2 0 0.8" size="0.01"/>
+
+            <!-- Extended approach sites beyond barrier edges for torso proximity (at ground level) -->
+            <!-- Barrier half-width = 1.096m, extend 0.4m beyond edges for approach -->
+            <!-- Y-direction: positive is left, negative is right in barrier's local frame -->
+            <site name="site_approach_left" pos="1.796 0 0.4335" size="0.01"/>   <!-- 0.4m beyond left edge -->
+            <site name="site_approach_right" pos="-1.796 0 0.4335" size="0.01"/> <!-- 0.4m beyond right edge -->
+
+      </body>
+    </worldbody>
+</mujoco>

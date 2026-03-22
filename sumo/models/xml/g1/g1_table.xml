@@ -1,0 +1,52 @@
+<mujoco model="g1_table">
+  <include file="g1.xml"/>
+
+  <asset>
+    <material name="object" rgba="0.6 0.4 0.2 1"/>
+  </asset>
+
+  <worldbody>
+    <!-- Ground plane with medium friction - G1 feet have higher friction (1.0), table legs have lower friction (0.3) -->
+    <!-- <geom name="ground_override" type="plane" size="10 10 0.01" pos="0 0 0" friction="0.2 0.005 0.0001" priority="5"/> -->
+
+    <body name="table" pos="3 0 0">
+      <joint name="table_joint" type="free" limited="false"/>
+      <!-- Center of mass positioned at approximate geometric center of table (accounting for legs and top) -->
+      <!-- For a table: tabletop at 0.765m, legs from 0 to 0.75m, COM roughly at mid-height -->
+      <!-- Inertia for rectangular box: Ix = 1/12 * m * (h^2 + d^2), where h=height, d=depth, w=width -->
+      <!-- Table dimensions: 1.2m x 0.8m x 0.78m tall, mass=10kg -->
+      <!-- Ix (roll, about X): 1/12 * 10 * (0.78^2 + 0.8^2) ≈ 1/12 * 10 * 1.25 ≈ 1.04 -->
+      <!-- Iy (pitch, about Y): 1/12 * 10 * (0.78^2 + 1.2^2) ≈ 1/12 * 10 * 2.05 ≈ 1.71 -->
+      <!-- Iz (yaw, about Z): 1/12 * 10 * (1.2^2 + 0.8^2) ≈ 1/12 * 10 * 2.08 ≈ 1.73 -->
+      <inertial pos="0 0 0.4" mass="10" diaginertia="1.04 1.71 1.73"/>
+
+      <!-- Tabletop: 1.2m x 0.8m x 0.03m (typical dining table dimensions) -->
+      <geom name="tabletop_collision" type="box" size="0.6 0.4 0.015" pos="0 0 0.765" group="3" rgba="0.2 0.6 0.2 0.3" friction="1.0 0.005 0.0001" priority="1"/>
+      <geom name="tabletop_visual" type="box" size="0.6 0.4 0.015" pos="0 0 0.765" contype="0" conaffinity="0" group="2" material="object"/>
+
+      <!-- Four legs: positioned at corners, cylinder radius 0.05m, height 0.75m, low friction for easier pushing -->
+      <geom name="leg1_collision" type="cylinder" size="0.05 0.375" pos="0.52 0.32 0.375" group="3" rgba="0.2 0.6 0.2 0.3" friction="0.3 0.005 0.0001" priority="1"/>
+      <geom name="leg1_visual" type="cylinder" size="0.05 0.375" pos="0.52 0.32 0.375" contype="0" conaffinity="0" group="2" material="object"/>
+
+      <geom name="leg2_collision" type="cylinder" size="0.05 0.375" pos="-0.52 0.32 0.375" group="3" rgba="0.2 0.6 0.2 0.3" friction="0.3 0.005 0.0001" priority="1"/>
+      <geom name="leg2_visual" type="cylinder" size="0.05 0.375" pos="-0.52 0.32 0.375" contype="0" conaffinity="0" group="2" material="object"/>
+
+      <geom name="leg3_collision" type="cylinder" size="0.05 0.375" pos="0.52 -0.32 0.375" group="3" rgba="0.2 0.6 0.2 0.3" friction="0.3 0.005 0.0001" priority="1"/>
+      <geom name="leg3_visual" type="cylinder" size="0.05 0.375" pos="0.52 -0.32 0.375" contype="0" conaffinity="0" group="2" material="object"/>
+
+      <geom name="leg4_collision" type="cylinder" size="0.05 0.375" pos="-0.52 -0.32 0.375" group="3" rgba="0.2 0.6 0.2 0.3" friction="0.3 0.005 0.0001" priority="1"/>
+      <geom name="leg4_visual" type="cylinder" size="0.05 0.375" pos="-0.52 -0.32 0.375" contype="0" conaffinity="0" group="2" material="object"/>
+
+      <site name="trace_table" pos="0 0 0" size="0.01"/>
+      <site name="site_table_object" pos="0 0 0" size="0.01"/>
+    </body>
+  </worldbody>
+
+  <sensor>
+    <framepos name="trace_pelvis" objtype="site" objname="site_pelvis"/>
+    <framepos name="trace_table" objtype="site" objname="trace_table"/>
+    <framepos name="trace_left_palm" objtype="site" objname="left_palm"/>
+    <framepos name="trace_right_palm" objtype="site" objname="right_palm"/>
+    <frameyaxis name="table_y_axis" objtype="site" objname="site_table_object"/>
+  </sensor>
+</mujoco>

@@ -1,0 +1,37 @@
+<mujoco model="spot_yellow_chair_ramp">
+<!-- Copyright (c) 2024 Boston Dynamics AI Institute LLC. All rights reserved. -->
+  <include file="../spot_components/default.xml" />
+  <include file="../spot_components/assets.xml" />
+  <include file="../objects/yellow_chair/yellow_chair_defs.xml" />
+
+  <worldbody>
+    <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 5" dir="0 0 -1" castshadow="false"/>
+    <light directional="true" diffuse=".6 .6 .6" specular="0.2 0.2 0.2" pos="0 0 4" dir="0 0 -1"/>
+
+    <geom name="ground" type="plane" size="10 10 0.01" class="collision" priority="5" friction="0.7" material="blue_grid"/>
+
+    <body name="ramp" pos="3.090 5.412 0" quat="0 0 0 1">
+      <geom name="ramp_box1" type="box" size="1.215 0.61 0.125" pos="1.215 0.61 0.125" friction="0.6" priority="5"/>
+      <geom name="ramp_box2" type="box" size="1.215 0.95 0.125" pos="1.215 2.14685948 0.00698456" quat="0.998 -0.0628 0 0" friction="0.6" priority="5"/>
+      <geom name="ramp_cyl3" type="cylinder" size="0.05" fromto="0 1.22 0.203 2.43 1.22 0.203" friction="0.6" priority="5"/>
+    </body>
+
+    <body name="body" pos="0 0 0.7">
+      <include file="../spot_components/body.xml" />
+      <include file="../spot_components/legs.xml" />
+      <include file="../spot_components/arm.xml" />
+    </body>
+
+  </worldbody>
+
+  <include file="../objects/yellow_chair/yellow_chair.xml" />
+
+  <include file="../spot_components/actuator.xml" />
+  <include file="../spot_components/sensor.xml" />
+  <include file="../spot_components/contact.xml" />
+  <sensor>
+    <framepos name="trace_body" objtype="site" objname="site_body"/>
+    <framepos name="trace_fngr_site" objtype="site" objname="site_arm_link_fngr"/>
+    <framepos name="trace_chair" objtype="site" objname="trace_yellow_chair"/>
+  </sensor>
+</mujoco>
