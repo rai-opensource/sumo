@@ -1,0 +1,55 @@
+<mujoco model="spot_crowd_barrier">
+<!-- Copyright (c) 2024 Boston Dynamics AI Institute LLC. All rights reserved. -->
+  <include file="../spot_components/default.xml" />
+  <include file="../spot_components/assets.xml" />
+
+  <worldbody>
+    <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 5" dir="0 0 -1" castshadow="false"/>
+    <light directional="true" diffuse=".6 .6 .6" specular="0.2 0.2 0.2" pos="0 0 4" dir="0 0 -1"/>
+
+    <geom name="ground" type="plane" size="10 10 0.01" class="collision" priority="5" friction="1.0" material="blue_grid"/>
+
+    <body name="body" pos="0 0 0.7">
+      <include file="../spot_components/body.xml" />
+      <include file="../spot_components/legs.xml" />
+      <include file="../spot_components/arm.xml" />
+    </body>
+
+
+    <!-- <include file="../objects/crowd_barrier/crowd_barrier_mesh.xml" /> -->
+  </worldbody>
+
+  <include file="../objects/crowd_barrier/crowd_barrier.xml" />
+
+  <include file="../spot_components/actuator.xml" />
+  <include file="../spot_components/sensor.xml" />
+  <include file="../spot_components/contact.xml" />
+  <sensor>
+    <framepos name="trace_body" objtype="site" objname="site_body"/>
+    <framepos name="trace_fngr_site" objtype="site" objname="site_arm_link_fngr"/>
+    <framepos name="trace_cone" objtype="site" objname="trace_crowd_barrier"/>
+    <framepos name="trace_grasp_upright_left" objtype="site" objname="trace_grasp_upright_left"/>
+    <framepos name="trace_grasp_upright_right" objtype="site" objname="trace_grasp_upright_right"/>
+
+    <!-- Object orientation sensors (object_y_axis and object_z_axis already defined in spot_components/sensor.xml) -->
+    <framexaxis name="object_x_axis" objtype="body" objname="crowd_barrier"/>
+
+    <!-- Gripper to grasp point sensors (upright task) -->
+    <framepos name="sensor_gripper_to_grasp_left" objtype="site" objname="site_arm_link_wr1" reftype="site" refname="site_grasp_upright_left"/>
+    <framepos name="sensor_gripper_to_grasp_right" objtype="site" objname="site_arm_link_wr1" reftype="site" refname="site_grasp_upright_right"/>
+
+    <!-- Gripper to grasp point sensors (drag task - uses mid-height sites) -->
+    <framepos name="sensor_gripper_to_grasp_drag_left" objtype="site" objname="site_arm_link_wr1" reftype="site" refname="site_grasp_drag_left"/>
+    <framepos name="sensor_gripper_to_grasp_drag_right" objtype="site" objname="site_arm_link_wr1" reftype="site" refname="site_grasp_drag_right"/>
+
+    <!-- Gripper orientation sensors -->
+    <framexaxis name="sensor_gripper_x_axis" objtype="site" objname="site_arm_link_wr1"/>
+    <frameyaxis name="sensor_gripper_y_axis" objtype="site" objname="site_arm_link_wr1"/>
+    <framezaxis name="sensor_gripper_z_axis" objtype="site" objname="site_arm_link_wr1"/>
+
+    <!-- Torso to approach site sensors -->
+    <framepos name="sensor_torso_to_approach_left" objtype="site" objname="site_body" reftype="site" refname="site_approach_left"/>
+    <framepos name="sensor_torso_to_approach_right" objtype="site" objname="site_body" reftype="site" refname="site_approach_right"/>
+  </sensor>
+
+</mujoco>

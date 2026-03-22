@@ -1,0 +1,12 @@
+<mujoco model="rugged_box">
+<!-- Copyright (c) 2023-2025 Boston Dynamics AI Institute LLC. All rights reserved. -->
+  <worldbody>
+    <body name="rugged_box" pos="0 0 0">
+      <joint name="rugged_box_joint" type="free"/>
+      <inertial pos="0 0 0.215" mass="20.0" diaginertia="2.77 0.95 2.02"/>
+      <geom name="rugged_box_collision" type="box" pos="0 0 0.215" size="0.275 0.555 0.215" friction="0.3 0.3 0.0001"/>
+      <geom name="rugged_box_visual" type="box" pos="0 0 0.215" size="0.275 0.555 0.215" contype="0" conaffinity="0" group="2"/>
+      <site name="site_object" pos="0 0 0" size="0.01"/>
+    </body>
+  </worldbody>
+</mujoco>

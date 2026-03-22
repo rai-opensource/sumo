@@ -1,0 +1,21 @@
+<mujoco model="traffic_cone_defs">
+<!-- Copyright (c) 2025 Boston Dynamics AI Institute LLC. All rights reserved. -->
+
+  <default>
+    <default class="visual_cone">
+      <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+    </default>
+    <default class="collision_cone">
+      <geom friction="1.0 1.15" priority="6" group="0"/>
+    </default>
+  </default>
+
+  <asset>
+      <material name="traffic_cone_orange" rgba="1.0 0.5 0.0 1.0"/>
+      <material name="traffic_cone_black" rgba="0.0 0.0 0.0 1.0"/>
+      <material name="traffic_cone_material" rgba="1.0 0.5 0.0 1.0"/>
+      <mesh name="traffic_cone_mesh" file="../../../meshes/traffic_cone/visual/visual.obj"/>
+  </asset>
+
+
+</mujoco>

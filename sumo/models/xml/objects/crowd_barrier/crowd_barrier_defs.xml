@@ -1,0 +1,56 @@
+<mujoco model="crowd_barrier_defs">
+  <!-- Copyright (c) 2025 Boston Dynamics AI Institute LLC. All rights reserved. -->
+  <!-- <compiler angle="radian" assetdir="../../../meshes/" autolimits="true"/> -->
+
+  <default>
+    <default class="visual_barrier">
+      <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+    </default>
+    <default class="collision_barrier">
+      <geom friction="0.3 0.3" priority="6"/>
+    </default>
+  </default>
+
+  <asset>
+    <material name="crowd_barrier_material" rgba="0.9 0.9 0.1 1.0"/>
+    <material name="crowd_barrier_orange" rgba="1.0 0.5 0.0 0.8"/>
+    <mesh name="crowd_barrier_visual_mesh" file="../../../meshes/crowd_barrier/visual.obj"/>
+    <!-- <mesh name="crowd_barrier_collision_1" file="crowd_barrier/collision_1.obj"/>
+    <mesh name="crowd_barrier_collision_2" file="crowd_barrier/collision_2.obj"/>
+    <mesh name="crowd_barrier_collision_3" file="crowd_barrier/collision_3.obj"/>
+    <mesh name="crowd_barrier_collision_4" file="crowd_barrier/collision_4.obj"/>
+    <mesh name="crowd_barrier_collision_5" file="crowd_barrier/collision_5.obj"/>
+    <mesh name="crowd_barrier_collision_6" file="crowd_barrier/collision_6.obj"/>
+    <mesh name="crowd_barrier_collision_7" file="crowd_barrier/collision_7.obj"/>
+    <mesh name="crowd_barrier_collision_8" file="crowd_barrier/collision_8.obj"/>
+    <mesh name="crowd_barrier_collision_9" file="crowd_barrier/collision_9.obj"/>
+    <mesh name="crowd_barrier_collision_10" file="crowd_barrier/collision_10.obj"/>
+    <mesh name="crowd_barrier_collision_11" file="crowd_barrier/collision_11.obj"/>
+    <mesh name="crowd_barrier_collision_12" file="crowd_barrier/collision_12.obj"/>
+    <mesh name="crowd_barrier_collision_13" file="crowd_barrier/collision_13.obj"/>
+    <mesh name="crowd_barrier_collision_14" file="crowd_barrier/collision_14.obj"/>
+    <mesh name="crowd_barrier_collision_15" file="crowd_barrier/collision_15.obj"/>
+    <mesh name="crowd_barrier_collision_16" file="crowd_barrier/collision_16.obj"/>
+    <mesh name="crowd_barrier_collision_17" file="crowd_barrier/collision_17.obj"/>
+    <mesh name="crowd_barrier_collision_18" file="crowd_barrier/collision_18.obj"/>
+    <mesh name="crowd_barrier_collision_19" file="crowd_barrier/collision_19.obj"/>
+    <mesh name="crowd_barrier_collision_20" file="crowd_barrier/collision_20.obj"/>
+    <mesh name="crowd_barrier_collision_21" file="crowd_barrier/collision_21.obj"/>
+    <mesh name="crowd_barrier_collision_22" file="crowd_barrier/collision_22.obj"/>
+    <mesh name="crowd_barrier_collision_23" file="crowd_barrier/collision_23.obj"/>
+    <mesh name="crowd_barrier_collision_24" file="crowd_barrier/collision_24.obj"/>
+    <mesh name="crowd_barrier_collision_25" file="crowd_barrier/collision_25.obj"/>
+    <mesh name="crowd_barrier_collision_26" file="crowd_barrier/collision_26.obj"/>
+    <mesh name="crowd_barrier_collision_27" file="crowd_barrier/collision_27.obj"/>
+    <mesh name="crowd_barrier_collision_28" file="crowd_barrier/collision_28.obj"/>
+    <mesh name="crowd_barrier_collision_29" file="crowd_barrier/collision_29.obj"/> -->
+  </asset>
+</mujoco>
+
+
+<!-- <mujoco model="crowd_barrier_defs">
+<!-- Copyright (c) 2025 Boston Dynamics AI Institute LLC. All rights reserved. -->
+  <asset>
+      <mesh name="crowd_barrier_mesh" file="../../../meshes/barrier/crowd_barrier.obj"/>
+  </asset>
+</mujoco> -->

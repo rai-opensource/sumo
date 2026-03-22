@@ -1,0 +1,41 @@
+name: Precommit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  precommit:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: prefix-dev/setup-pixi@v0.9.3
+        with:
+          pixi-version: latest
+          cache: true
+
+      # ── Stubs cache ────────────────────────────────────────────────
+      - name: Restore typings cache
+        uses: actions/cache@v5
+        id: typings-cache
+        with:
+          path: typings
+          key: typings-${{ hashFiles('pyproject.toml') }}
+
+      - name: Generate stubs if cache miss
+        if: steps.typings-cache.outputs.cache-hit != 'true'
+        run: pixi run pybind11-stubgen mujoco -o typings/
+
+      # ── Pre-commit (ruff lint, ruff format, trailing whitespace, etc.)
+      - name: Run pre-commit
+        run: pixi run pre-commit run --all-files
+
+      # ── Type checking ──────────────────────────────────────────────
+      - name: Run Pyright
+        run: pixi run pyright sumo/

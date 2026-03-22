@@ -1,0 +1,32 @@
+<mujoco model="barbell">
+<!-- Copyright (c) 2025 Boston Dynamics AI Institute LLC. All rights reserved. -->
+  <worldbody>
+    <body name="barbell">
+      <joint name="barbell_joint" type="free" limited="false"/>
+      <inertial pos="0 0 0" mass="1.5" diaginertia="0.0025 0.04625 0.04625"/>
+      <geom name="bar_shaft"
+            type="cylinder"
+            pos="0 0 0"
+            quat="0.707 0 0.707 0"
+            size="0.0254 0.3"
+            rgba="0.7 0.7 0.7 1"
+            density="7850"/>
+
+      <geom name="weight_left"
+            type="box"
+            pos="-0.3 0 0"
+            quat="0.707 0 0.707 0"
+            size="0.1 0.1 0.1"
+            rgba="0.2 0.2 0.2 1"/>
+
+      <geom name="weight_right"
+            type="box"
+            pos="0.3 0 0"
+            quat="0.707 0 0.707 0"
+            size="0.1 0.1 0.1"
+            rgba="0.2 0.2 0.2 1"/>
+
+      <site name="site_object" pos="0 0 0" size="0.01"/>
+    </body>
+  </worldbody>
+</mujoco>

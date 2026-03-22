@@ -1,0 +1,56 @@
+<mujoco model="spot_rugged_box">
+<!-- Copyright (c) 2024 Boston Dynamics AI Institute LLC. All rights reserved. -->
+  <include file="../spot_components/default.xml" />
+  <include file="../spot_components/assets.xml" />
+
+  <worldbody>
+    <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 5" dir="0 0 -1" castshadow="false"/>
+    <light directional="true" diffuse=".6 .6 .6" specular="0.2 0.2 0.2" pos="0 0 4" dir="0 0 -1"/>
+
+    <geom name="ground" type="plane" size="10 10 0.01" class="collision" priority="5" friction="1.0" material="blue_grid"/>
+
+    <body name="body" pos="0 0 0.7">
+      <include file="../spot_components/body.xml" />
+      <include file="../spot_components/legs.xml" />
+      <include file="../spot_components/arm.xml" />
+    </body>
+
+
+  </worldbody>
+
+  <include file="../objects/rugged_box/rugged_box.xml" />
+
+  <include file="../spot_components/actuator.xml" />
+  <include file="../spot_components/sensor.xml" />
+  <include file="../spot_components/contact.xml" />
+  <sensor>
+    <!-- Sensors for reward computation -->
+    <framepos name="base_position" objtype="site" objname="site_body" />
+    <framexaxis name="base_xaxis" objtype="body" objname="body" />
+    <frameyaxis name="base_yaxis" objtype="body" objname="body" />
+    <framezaxis name="base_zaxis" objtype="body" objname="body" />
+
+    <!-- Foot position sensors -->
+    <framepos name="fl_pos" objtype="site" objname="site_front_left" />
+    <framepos name="fr_pos" objtype="site" objname="site_front_right" />
+    <framepos name="hl_pos" objtype="site" objname="site_rear_left" />
+    <framepos name="hr_pos" objtype="site" objname="site_rear_right" />
+
+    <!-- Center of mass and velocity sensors -->
+    <subtreecom name="base_subtreecom" body="body"/>
+    <subtreelinvel name="base_subtreelinvel" body="body"/>
+    <subtreeangmom name="base_angmom" body="body"/>
+
+    <!-- Trace sensors -->
+    <framepos name="trace_body" objtype="site" objname="site_body"/>
+    <framepos name="trace_fngr_site" objtype="site" objname="site_arm_link_fngr"/>
+    <framepos name="trace_rugged_box" objtype="site" objname="site_object"/>
+
+    <!-- Object orientation sensors -->
+    <framexaxis name="object_x_axis" objtype="body" objname="rugged_box"/>
+
+    <!-- End effector to object sensor -->
+    <!-- <framepos name="sensor_arm_link_fngr" objtype="site" objname="site_arm_link_fngr" reftype="site" refname="site_object"/> -->
+  </sensor>
+
+</mujoco>

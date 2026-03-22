@@ -1,0 +1,51 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: prefix-dev/setup-pixi@v0.9.3
+        with:
+          pixi-version: latest
+          cache: true
+
+      # ── Build C++ extensions ──────────────────────────────────────
+      - name: Restore build cache
+        id: ext-cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            g1_extensions/build
+            .judo-src/build
+            .judo-src/mujoco_extensions/policy_rollout/*.so
+          key: build-${{ hashFiles('pixi.lock', 'g1_extensions/**/*.cpp', 'g1_extensions/**/*.h', 'g1_extensions/**/CMakeLists.txt') }}
+
+      - name: Build extensions (cache miss)
+        if: steps.ext-cache.outputs.cache-hit != 'true'
+        run: pixi run build
+
+      # ── Download mesh assets ──────────────────────────────────────
+      - name: Download meshes from release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pixi run python -c "from judo.utils.assets import download_and_extract_meshes; from judo import MODEL_PATH; download_and_extract_meshes(str(MODEL_PATH))"
+
+      # ── Pre-warm robot_descriptions cache ─────────────────────────
+      - name: Cache mujoco_menagerie meshes
+        run: pixi run python -c "from robot_descriptions import spot_mj_description"
+
+      # ── Tests ─────────────────────────────────────────────────────
+      - name: Run tests
+        run: pixi run pytest -rsx

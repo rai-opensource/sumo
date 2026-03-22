@@ -1,0 +1,49 @@
+<!-- Copyright (c) 2025 Boston Dynamics AI Institute LLC. All rights reserved. -->
+<mujoco model="tire_rack">
+  <include file="tire_rack_defs.xml" />
+  <worldbody>
+    <body name="tire_rack" pos="0 0 0.3">
+      <joint name="tire_rack_joint" type="free"/>
+      <!-- Calculated as a hollow box with wall thickness of 0.01 m. -->
+      <inertial pos="0 0 0" mass="6.8" diaginertia="2.8043 1.267 2.8043"/>
+
+      <!-- Left geom -->
+      <geom name="left_horizontal_link_1" type="box" size="0.3 0.015 0.015" pos="0 -0.6175 -0.285" priority="3" />
+      <geom name="left_horizontal_link_2" type="box" size="0.19 0.015 0.015" pos="-0.11 -0.6175 0.285" priority="3"/>
+      <geom name="left_vertical_link_1" type="box" size="0.015 0.015 0.3" pos="-0.285 -0.6175 0" priority="3"/>
+      <geom name="left_vertical_link_2" type="box" size="0.015 0.015 0.314" pos="0.175 -0.6175 0" quat="0.9846394 0 -0.1746005 0" priority="3"/>
+
+      <!-- Right geom -->
+      <geom name="right_horizontal_link_1" type="box" size="0.3 0.015 0.015" pos="0 0.6175 -0.285" priority="3"/>
+      <geom name="right_horizontal_link_2" type="box" size="0.19 0.015 0.015" pos="-0.11 0.6175 0.285" priority="3"/>
+      <geom name="right_vertical_link_1" type="box" size="0.015 0.015 0.3" pos="-0.285 0.6175 0" priority="3"/>
+      <geom name="right_vertical_link_2" type="box" size="0.015 0.015 0.314" pos="0.175 0.6175 0" quat="0.9846394 0 -0.1746005 0" priority="3"/>
+
+      <!-- Support cylinders geom -->
+      <geom name="cylinder_1" type="cylinder" size="0.015 0.6025" pos="-0.15 0 -0.285" quat="0.7073883 0.7068252 0 0" priority="3"/>
+      <geom name="cylinder_2" type="cylinder" size="0.015 0.6025" pos="0.2 0 -0.285" quat="0.7073883 0.7068252 0 0" priority="3"/>
+      <geom name="cylinder_3" type="cylinder" size="0.015 0.6025" pos="-0.285 0 0.15" quat="0.7073883 0.7068252 0 0" priority="3"/>
+
+      <!-- Sites for sensors and tracking -->
+      <site name="site_object" pos="0 0 0" size="0.01"/>
+      <site name="trace_tire_rack" pos="0 0 0" size="0.01"/>
+
+      <!-- Grasp sites on left and right vertical frames at mid-height -->
+      <!-- Mid-height ~0 (center of mass), left/right at y = ±0.6175 -->
+      <site name="site_grasp_left" pos="0 -0.6175 0.3" size="0.01"/>
+      <site name="site_grasp_left_mid" pos="-0.5 0 0.2" size="0.01"/>
+      <site name="site_grasp_right" pos="0 0.6175 0.3" size="0.01"/>
+
+      <!-- Trace sites for grasp visualization -->
+      <site name="trace_grasp_left" pos="0 -0.6175 0.3" size="0.01"/>
+      <site name="trace_grasp_left_mid" pos="-0.5 0 0.2" size="0.01"/>
+      <site name="trace_grasp_right" pos="0 0.6175 0.3" size="0.01"/>
+
+      <!-- Approach sites for torso positioning (extended beyond rack edges) -->
+      <!-- Extend 0.4m beyond left/right edges for approach -->
+      <site name="site_approach_left" pos="0 -1.0175 0" size="0.01"/>   <!-- 0.4m beyond left edge -->
+      <site name="site_approach_mid" pos="-1.0 0 0" size="0.01"/>
+      <site name="site_approach_right" pos="0 1.0175 0" size="0.01"/>  <!-- 0.4m beyond right edge -->
+    </body>
+  </worldbody>
+</mujoco>

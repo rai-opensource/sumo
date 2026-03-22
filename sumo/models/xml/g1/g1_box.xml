@@ -1,0 +1,26 @@
+<mujoco model="g1_box">
+  <include file="g1.xml"/>
+
+  <asset>
+    <material name="object" rgba="0.8 0.2 0.1 1"/>
+  </asset>
+
+  <worldbody>
+    <body name="large_box" pos="3 0 0.275">
+      <joint name="box_joint" type="free"/>
+      <inertial pos="0 0 0" mass="10" diaginertia="0.1445 0.1445 0.1445"/>
+      <geom name="large_box_collision" type="box" size="0.5 0.5 0.5" group="3" rgba="0.2 0.6 0.2 0.3" friction="0.5 0.005 0.0001" priority="1"/>
+      <geom name="large_box_visual" type="box" size="0.5 0.5 0.5" contype="0" conaffinity="0" group="2" material="object"/>
+      <site name="trace_large_box" pos="0 0 0" size="0.01"/>
+      <site name="site_large_object" pos="0 0 0" size="0.01"/>
+    </body>
+  </worldbody>
+
+  <sensor>
+    <framepos name="trace_pelvis" objtype="site" objname="site_pelvis"/>
+    <framepos name="trace_large_box" objtype="site" objname="trace_large_box"/>
+    <framepos name="trace_left_palm" objtype="site" objname="left_palm"/>
+    <framepos name="trace_right_palm" objtype="site" objname="right_palm"/>
+    <frameyaxis name="object_y_axis" objtype="site" objname="site_large_object"/>
+  </sensor>
+</mujoco>

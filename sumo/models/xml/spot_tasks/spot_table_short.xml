@@ -1,0 +1,33 @@
+<mujoco model="spot_table_short">
+<!-- Copyright (c) 2025 Boston Dynamics AI Institute LLC. All rights reserved. -->
+  <include file="../spot_components/default.xml" />
+  <include file="../spot_components/assets.xml" />
+
+  <worldbody>
+    <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 5" dir="0 0 -1" castshadow="false"/>
+    <light directional="true" diffuse=".6 .6 .6" specular="0.2 0.2 0.2" pos="0 0 4" dir="0 0 -1"/>
+
+    <geom name="ground" type="plane" size="10 10 0.01" class="collision" priority="5" friction="0.7" material="blue_grid"/>
+
+    <body name="body" pos="0 0 0.7">
+      <include file="body.xml" />
+      <include file="legs.xml" />
+      <include file="arm.xml" />
+    </body>
+
+  </worldbody>
+  <include file="../objects/table_short.xml" />
+  <include file="actuator.xml" />
+  <include file="sensor.xml" />
+  <include file="contact.xml" />
+  <sensor>
+    <framepos name="trace_body" objtype="site" objname="site_body"/>
+    <framepos name="trace_fngr_site" objtype="site" objname="site_arm_link_fngr"/>
+    <framepos name="trace_table_short" objtype="site" objname="site_object"/>
+    <framexaxis name="sensor_gripper_x_axis" objtype="site" objname="site_arm_link_fngr"/>
+    <frameyaxis name="sensor_gripper_y_axis" objtype="site" objname="site_arm_link_fngr"/>
+    <framexaxis name="sensor_table_x_axis" objtype="site" objname="site_object"/>
+    <frameyaxis name="sensor_table_y_axis" objtype="site" objname="site_object"/>
+    <framezaxis name="sensor_table_z_axis" objtype="site" objname="site_object"/>
+  </sensor>
+</mujoco>

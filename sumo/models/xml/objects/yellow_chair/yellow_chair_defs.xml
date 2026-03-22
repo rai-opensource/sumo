@@ -1,0 +1,16 @@
+<mujoco model="yellow_chair_defs">
+<!-- Copyright (c) 2025 RAI Institute LLC. All rights reserved. -->
+  <default>
+    <default class="yellow_chair_visual">
+      <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+    </default>
+    <default class="yellow_chair_collision">
+      <geom friction="0.3 0.3" priority="6" material="yellow_chair_semi_transparent"/>
+    </default>
+  </default>
+  <asset>
+      <mesh name="yellow_chair_mesh" file="../../../meshes/yellow_chair/meshes/visual/visual_v2.obj"/>
+      <mesh name="yellow_chair_back" file="../../../meshes/yellow_chair/meshes/collision/yellow_chair_back_v2.obj"/>
+      <mesh name="yellow_chair_seat" file="../../../meshes/yellow_chair/meshes/collision/yellow_chair_seat_v2.obj"/>
+  </asset>
+</mujoco>

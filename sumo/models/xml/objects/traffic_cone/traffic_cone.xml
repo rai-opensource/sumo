@@ -1,0 +1,109 @@
+<mujoco model="traffic_cone">
+  <!-- Copyright (c) 2025 Boston Dynamics AI Institute LLC. All rights reserved. -->
+  <!-- Physical object: BOEN 28 in. Orange PVC Non-Reflective Traffic Safety Cone -->
+  <!-- Purchase link: https://www.homedepot.com/p/BOEN-28-in-Orange-PVC-Non-Reflective-Traffic-Safety-Cone-TC-28/303390706 -->
+  <include file="traffic_cone_defs.xml" />
+
+  <worldbody>
+    <body name="traffic_cone" pos="0 0 0">
+      <joint name="traffic_cone_joint" type="free"/>
+      <inertial pos="0 0 0.24" mass="3.36" diaginertia="0.25 0.25 0.09"/>
+
+      <!-- Visual mesh -->
+      <geom name="traffic_cone_visual" class="visual_cone" type="mesh" mesh="traffic_cone_mesh" material="traffic_cone_material"/>
+
+      <!-- Collision meshes -->
+      <!-- <geom name="traffic_cone_collision1" class="collision" type="mesh" mesh="traffic_cone_collision1" material="traffic_cone_mesh_material"/> -->
+      <geom name="traffic_cone_base_collision"
+            type="box"
+            size="0.18415 0.18415 0.01"
+            pos="0 0 0.033"
+            material="traffic_cone_black"
+            class="collision_cone"
+            friction="1.5 1.5"/>
+      <geom name="traffic_cone_ft1_collision"
+            type="box"
+            size="0.03 0.03 0.01"
+            pos="0.15 0.15 0.008"
+            material="traffic_cone_black"
+            class="collision_cone"
+            friction="1.5 1.5"/>
+      <geom name="traffic_cone_ft2_collision"
+            type="box"
+            size="0.03 0.03 0.01"
+            pos="-0.15 -0.15 0.008"
+            material="traffic_cone_black"
+            class="collision_cone"
+            friction="1.5 1.5"/>
+      <geom name="traffic_cone_ft3_collision"
+            type="box"
+            size="0.03 0.03 0.01"
+            pos="0.15 -0.15 0.008"
+            material="traffic_cone_black"
+            class="collision_cone"
+            friction="1.5 1.5"/>
+      <geom name="traffic_cone_ft4_collision"
+            type="box"
+            size="0.03 0.03 0.01"
+            pos="-0.15 0.15 0.008"
+            material="traffic_cone_black"
+            class="collision_cone"
+            friction="1.5 1.5"/>
+      <!-- Bottom section -->
+      <geom name="traffic_cone_bottom_collision"
+            type="cylinder"
+            size="0.13335 0.0889"
+            pos="0 0 0.1139"
+            rgba="1.0 0.5 0.0 1.0"
+            class="collision_cone"
+            friction="0.5 0.5"/>
+
+      <!-- Lower-middle section -->
+      <geom name="traffic_cone_lower_mid_collision"
+            type="cylinder"
+            size="0.10 0.0889"
+            pos="0 0 0.2917"
+            rgba="1.0 0.5 0.0 1.0"
+            class="collision_cone"
+            friction="0.5 0.5"/>
+
+      <!-- Upper-middle section -->
+      <geom name="traffic_cone_upper_mid_collision"
+            type="cylinder"
+            size="0.07 0.0889"
+            pos="0 0 0.4695"
+            rgba="1.0 0.5 0.0 1.0"
+            class="collision_cone"
+            friction="0.5 0.5"/>
+
+      <!-- Top section -->
+      <geom name="traffic_cone_top_collision"
+            type="cylinder"
+            size="0.025 0.0489"
+            pos="0 0 0.6473"
+            rgba="1.0 0.5 0.0 1.0"
+            class="collision_cone"
+            friction="0.5 0.5"/>
+
+      <!-- Sites for sensors and tracing -->
+      <site name="trace_traffic_cone" pos="0 0 0.24" size="0.01"/>
+      <site name="site_object" pos="0 0 0.24" size="0.01"/>
+      <site name="trace_traffic_cone_top" pos="0 0 0.673" size="0.01"/>
+      <site name="site_traffic_cone_top" pos="0 0 0.673" size="0.01"/>
+
+      <!-- Corner sites on base plate for grasping -->
+      <!-- Base plate half-width = 0.18415m -->
+      <site name="site_base_corner_fl" pos="0.2815 0.2815 0.0" size="0.01"/>  <!-- front-left corner -->
+      <site name="site_base_corner_fr" pos="0.2815 -0.2815 0.0" size="0.01"/> <!-- front-right corner -->
+      <site name="site_base_corner_bl" pos="-0.2815 0.2815 0.0" size="0.01"/> <!-- back-left corner -->
+      <site name="site_base_corner_br" pos="-0.2815 -0.2815 0.0" size="0.01"/> <!-- back-right corner -->
+
+      <!-- Extended approach sites beyond base plate for torso proximity (at ground level) -->
+      <site name="site_approach_front" pos="1.0 0 0.0" size="0.01"/>
+      <site name="site_approach_back" pos="-1.0 0 0.0" size="0.01"/>
+      <site name="site_approach_left" pos="0 1.0 0.0" size="0.01"/>
+      <site name="site_approach_right" pos="0 -1.0 0.0" size="0.01"/>
+
+    </body>
+  </worldbody>
+</mujoco>
