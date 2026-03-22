@@ -1,14 +1,9 @@
-import sys
 from pathlib import Path
 
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-PUBLIC_JUDO_ROOT = REPO_ROOT / ".judo-src"
 PRIVATE_JUDO_ROOT = REPO_ROOT / "judo-private"
-
-if PUBLIC_JUDO_ROOT.exists():
-    sys.path.insert(0, str(PUBLIC_JUDO_ROOT))
 
 
 @pytest.fixture(scope="session", autouse=True)
