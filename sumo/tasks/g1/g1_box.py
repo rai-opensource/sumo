@@ -206,4 +206,4 @@ class G1Box(G1Base):
     ) -> bool:
         """Check if G1 has fallen."""
         body_height = data.qpos[..., self.body_pose_idx[2]]
-        return body_height <= config.fall_threshold
+        return bool(body_height <= config.fall_threshold)
