@@ -24,7 +24,11 @@ class SimBackendG1:
         x0 = np.concatenate([sim_data.qpos, sim_data.qvel])
         controls = self.task_to_sim_ctrl(sim_controls).flatten()
         self.previous_policy_output = g1_extensions.sim_g1(
-            sim_model, sim_data, x0, controls, self.previous_policy_output,
+            sim_model,
+            sim_data,
+            x0,
+            controls,
+            self.previous_policy_output,
         )
 
 

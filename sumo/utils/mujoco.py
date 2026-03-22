@@ -5,6 +5,7 @@
 import numpy as np
 from judo.utils.mj_rollout_backend import make_model_data_pairs
 from judo.utils.rollout_backend import RolloutBackend
+from mujoco import MjModel
 
 from sumo.utils.extensions import require_g1_extensions
 
@@ -17,7 +18,7 @@ class G1RolloutBackend(RolloutBackend):
 
     def __init__(
         self,
-        model: "MjModel",  # noqa: F821
+        model: MjModel,
         num_threads: int,
         cutoff_time: float = 0.2,
     ) -> None:
