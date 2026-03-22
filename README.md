@@ -12,10 +12,9 @@ Requires [pixi](https://pixi.sh).
 pixi install
 
 # Build the local g1_extensions extension (required for G1 tasks)
+# and judo's mujoco_extensions (required for Spot tasks)
 pixi run build
 
-# Build judo's mujoco_extensions rollout backend (required for Spot tasks)
-pixi run build-judo-ext
 ```
 
 `pixi run sumo` assumes both native extensions above have already been built.
@@ -30,9 +29,34 @@ and the corresponding task form is `pixi run -e dev ...`.
 pixi run sumo
 
 # Specify a task
-pixi run sumo --init-task g1_box --num-episodes 1 --episode-length-s 1
-pixi run sumo --init-task spot_box_push --num-episodes 1
+pixi run sumo task=spot_box_push
+
+# Specify a task and other hydra options (e.g. optimizer)
+pixi run sumo task=g1_box optimizer=mppi
 ```
+
+## Headless MPC Runner
+
+`run_mpc` runs MPC episodes without the full GUI, useful for benchmarking and data collection.
+
+```bash
+# Run with defaults (spot_box_push, CEM optimizer, 2 episodes)
+pixi run python -m sumo.run_mpc
+
+# Specify task and options
+pixi run python -m sumo.run_mpc --init-task=g1_door --init-optimizer=cem --num-episodes=10
+
+# With visualization
+pixi run python -m sumo.run_mpc --init-task=g1_box --visualize
+
+# Disable saving results
+pixi run python -m sumo.run_mpc --init-task=spot_box_push --no-save-results
+
+# Record all rollout data
+pixi run python -m sumo.run_mpc --init-task=g1_door --record-all-data
+```
+
+Results are saved to `run_mpc/results/` by default as HDF5 files. Use `--help` to see all options.
 
 ## Tests
 
