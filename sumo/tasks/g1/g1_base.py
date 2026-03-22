@@ -9,7 +9,6 @@ from judo.tasks.base import Task, TaskConfig
 
 from sumo import MODEL_PATH
 from sumo.utils.indexing import get_pos_indices
-from sumo.utils.mujoco import RolloutBackend, SimBackendG1
 
 XML_PATH = str(MODEL_PATH / "xml/g1/g1.xml")
 
@@ -101,8 +100,6 @@ class G1Base(Task[ConfigT], Generic[ConfigT]):
         use_right_wrist: bool = False,
     ) -> None:
         super().__init__(model_path)
-        self.RolloutBackend = RolloutBackend
-        self.SimBackend = SimBackendG1
         self.use_left_arm = use_left_arm
         self.use_right_arm = use_right_arm
         self.use_left_wrist = use_left_wrist

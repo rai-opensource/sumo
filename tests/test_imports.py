@@ -78,9 +78,7 @@ def test_sumo_utils():
     assert hasattr(indexing, "get_pos_indices")
     assert hasattr(indexing, "get_sensor_indices")
     assert hasattr(indexing, "get_vel_indices")
-    assert hasattr(mujoco, "RolloutBackend")
-    assert hasattr(mujoco, "SimBackend")
-    assert hasattr(mujoco, "SimBackendG1")
+    assert hasattr(mujoco, "G1RolloutBackend")
     assert hasattr(mujoco, "make_model_data_pairs")
 
 

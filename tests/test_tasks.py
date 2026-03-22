@@ -242,9 +242,9 @@ def test_registered_spot_task_instantiation(task_name):
 @pytest.mark.g1_extensions
 def test_g1_controller_uses_g1_backend():
     from sumo.controller import make_controller
-    from sumo.controller.controller import G1RolloutBackendAdapter
+    from sumo.utils.mujoco import G1RolloutBackend
 
     controller = make_controller("g1_box", "cem")
 
-    assert isinstance(controller.rollout_backend, G1RolloutBackendAdapter)
+    assert isinstance(controller.rollout_backend, G1RolloutBackend)
     assert controller.action_normalizer.dim == controller.task.nu
