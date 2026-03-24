@@ -1,4 +1,5 @@
 # Sumo 🥋
+Disclaimer: this code is released accompanying a paper submission only. The paper itself can be found [here]().
 
 `sumo`🥋 is a research codebase for whole-body loco-manipulation built on
 [`judo`🥋](https://github.com/bdaiinstitute/judo).
