@@ -1,4 +1,7 @@
 # Sumo 🥋
+
+> [!IMPORTANT]
+> This repository has moved from [`bdaiinstitute/sumo`](https://github.com/bdaiinstitute/sumo) to [`rai-opensource/sumo`](https://github.com/rai-opensource/sumo).
 Disclaimer: this code is released accompanying a paper submission only. The paper itself can be found [here]().
 
 `sumo`🥋 is a research codebase for whole-body loco-manipulation built on
