@@ -71,9 +71,10 @@ If you find this codebase helpful, please consider citing the SUMO paper.
 
 ```bibtex
 @article{zhang2026sumo,
-  title={Sumo: Dynamic and Generalizable Whole-Body Loco-Manipulation},
-  author={John Z. Zhang and Maks Sorokin and Jan Brudigam and Brandon Hung and Stephen Phillips and Dmitry Yershov and Farzad Niroui and Tong Zhao and Leonor Fermoselle and Xinghao Zhu and Chao Cao and Duy Ta and Tao Pang and Jiuguang Wang and Preston Culbertson and Zachary Manchester and Simon Le Cleac'h},
-  year={2026},
-  note={TODO: add arXiv link}
+  title = {Sumo: Dynamic and Generalizable Whole-Body Loco-Manipulation},
+  author = {Zhang, John Z. and Sorokin, Maks and Br{\"u}digam, Jan and Hung, Brandon and Phillips, Stephen and Yershov, Dmitry and Niroui, Farzad and Zhao, Tong and Fermoselle, Leonor and Zhu, Xinghao and Cao, Chao and Ta, Duy and Pang, Tao and Wang, Jiuguang and Culbertson, Preston and Manchester, Zachary and Le Cl\'eac'h, Simon},
+  journal = {arXiv preprint arXiv:2604.08508},
+  year = {2026},
+  url = {https://arxiv.org/abs/2604.08508}
 }
 ```
