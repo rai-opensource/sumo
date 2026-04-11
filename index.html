@@ -77,7 +77,7 @@
       <div class="tagline" id="abstract">Abstract</div>
       <div class="section">
         <p>
-          This paper presents a sim-to-real approach that enables legged robots to dynamically manipulate large and heavy objects with whole-body dexterity. Our key insight is that by performing test-time steering of a pre-trained whole-body control policy with a sample-based planner, we can enable these robots to solve a variety of dynamic loco-manipulation tasks. Interestingly, we find our method generalizes to a diverse set of objects and tasks with no additional tuning or training, and can be further enhanced by flexibly adjusting the cost function at test time. We demonstrate the capabilities of our approach through a variety of challenging loco-manipulations tasks on a Spot quadruped robot in the real world, including uprighting a tire heavier than the robot's nominal lifting capacity and dragging a crowd-control barrier larger and taller than the robot itself. Additionally, we show that the same approach can be generalized to humanoid loco-manipulations tasks, such as opening a door and pushing a table, in simulation.
+          This paper presents a sim-to-real approach that enables legged robots to dynamically manipulate large and heavy objects with whole-body dexterity. Our key insight is that by performing test-time steering of a pre-trained whole-body control policy with a sample-based planner, we can enable these robots to solve a variety of dynamic loco-manipulation tasks. Interestingly, we find our method generalizes to a diverse set of objects and tasks with no additional tuning or training, and can be further enhanced by flexibly adjusting the cost function at test time. We demonstrate the capabilities of our approach through a variety of challenging loco-manipulation tasks on a Spot quadruped robot in the real world, including uprighting a tire heavier than the robot's nominal lifting capacity and dragging a crowd-control barrier larger and taller than the robot itself. Additionally, we show that the same approach can be generalized to humanoid loco-manipulation tasks, such as opening a door and pushing a table, in simulation.
         </p>
       </div>
 
@@ -88,7 +88,7 @@
           <img src="assets/img/system_overview.png" alt="System Overview" style="width: 711px; height: 400px; object-fit: contain; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,.15); margin: 0; flex: 0 0 auto;">
           <img src="assets/img/dynamics_comparison.png" alt="Dynamics Comparison" style="width: auto; height: 400px; object-fit: contain; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,.15); margin: 0; flex: 0 0 auto;">
         </div>
-        <p class="figure-caption" style="text-align: center; margin-top: 10px;"><b>System Overview:</b> (left) Sumo takes an hirarchical approach that combines a pre-trained whole-body control policy (purple) with a high-level sample-based MPC (yellow). The whole-body control policy takes in the current state and desired torso, arm, and leg commands and outputs the joint-level commands for the quadruped or humanoid robots at $50$Hz. The high-level sample-based MPC aims to minimize a task-specific cost function by performing dyanmics rollouts with the policy-in-the-loop (right).</p>
+        <p class="figure-caption" style="text-align: center; margin-top: 10px;"><b>System Overview:</b> Left: our method takes a hierarchical approach that combines a pre-trained whole-body control (WBC) policy (purple) with high-level sample-based MPC (green). The low-level whole-body control policy takes in the current state and desired torso, arm, and leg commands and outputs the joint-level commands for the quadruped or humanoid robot at $50$Hz. The high-level sample-based MPC aims to minimize a task-specific cost function by taking in the current state estimate and solving for the desired torso, arm, and leg commands for the low-level policy at $20$Hz. Right: illustrations comparing standard dynamics rollouts, where the actions $u$ are the joint-level controls for the multi-body dynamics model, and our network-policy-augmented dynamics rollouts, where the actions $a$ are inputs to the low-level locomotion policy.</p>
       </div>
 
       <div class="tagline" id="spot-loco-manipulation">Spot Loco-Manipulation</div>
@@ -269,7 +269,7 @@
       </div>
       <div class="gallery-caption-container">
         <p class="figure-caption gallery-caption">
-          <b>Hierarchical Control is Key for Loco-Manipulation:</b> Sumo (our method) significantly outperforms end-to-end MPC and RL baselines that struggle to maintain balance while manipulating objects.
+          <b>Hierarchical Structure Simplifies Loco-Manipulation:</b> Comparing Sumo (ours, yellow) to end-to-end RL (purple) and MPC (navy) on five loco-manipulation tasks that ask the robot to move an object to a goal. Sumo achieves high success across all objects. End-to-end RL is competitive on the box, chair, and cone but degrades sharply on the tire and tire rack, while end-to-end MPC struggles across the board.
         </p>
       </div>
     </div>
@@ -284,8 +284,7 @@
       </div>
       <div class="gallery-caption-container">
         <p class="figure-caption gallery-caption">
-          <b>Test-time Search Enables Generalization:</b> (left) Sumo (our method) generalizes zero-shot to new objects without additional training or changing the reward function by just updating the model online. Hierarchical RL trained on moving a box performs well on the box task, but fails to generalize other shapes, weights, and geometires despite domain randomization.
-          (right) With Sumo, we can change the objective at test time to achieve new behaviors. Here, we replace the goal reward with an orientation reward to enable object upright behaviors. The same hierarchical RL policy on the move objective cannot be easily steered to achieve a new objective.
+          <b>Test-Time Search Enables Generalization:</b> Left: comparison of Sumo (yellow, ours), E2E RL (purple), and hierarchical RL (navy, HRL) on pushing five different objects to a goal. Sumo generalizes to new objects by replacing the object model at test time, whereas E2E RL and HRL policies trained only on box pushing fail on the other objects. Right: Sumo generalizes to uprighting objectives by changing the planner cost at test time, whereas the same E2E RL and HRL policies fail without additional training.
         </p>
       </div>
     </div>
@@ -307,7 +306,7 @@
       </div>
       <div class="gallery-caption-container">
         <p class="figure-caption gallery-caption">
-          <b>Object Move Tasks</b> Spot robot moves a tire, a traffic cone, a chair, a box, and a tire rack to the goal location all using the exact same reward function and optimizer. 
+          <b>Move Object Tasks:</b> Sumo generalizes to new objects by replacing the object model at test time. The Spot robot moves a tire, a traffic cone, a chair, a box, and a tire rack to the goal using the same Move cost function and hyperparameters.
         </p>
       </div>
     </div>
@@ -329,7 +328,7 @@
       </div>
       <div class="gallery-caption-container">
         <p class="figure-caption gallery-caption">
-          <b>Object Upright Tasks</b> Spot robot can upright a tire, a traffic cone, a chair, a box, and a tire rack by replacing a simple objective term in the reward function from above.
+          <b>Upright Object Tasks:</b> Sumo generalizes to uprighting objectives by changing the planner cost at test time. The Spot robot uprights a tire, a traffic cone, a chair, a box, and a tire rack without additional training.
         </p>
       </div>
     </div>
