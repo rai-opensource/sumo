@@ -4,11 +4,12 @@ from dataclasses import dataclass
 from typing import Any
 
 import numpy as np
+from judo.tasks.base import TaskConfig
 from judo.utils.fields import np_1d_field
 from mujoco import MjData, MjModel
 
 from sumo import MODEL_PATH
-from sumo.tasks.spot.spot_base import SpotBase, SpotBaseConfig
+from sumo.tasks.spot.spot_base import SpotBase
 from sumo.tasks.spot.spot_constants import (
     LEGS_STANDING_POS,
     STANDING_HEIGHT,
@@ -16,21 +17,23 @@ from sumo.tasks.spot.spot_constants import (
 
 XML_PATH = str(MODEL_PATH / "xml/spot_tasks/spot_tire_rack.xml")
 
-USE_LEGS = False
 RADIUS_MIN = 1.0
 RADIUS_MAX = 2.0
 DEFAULT_RACK_HEIGHT = 0.3
 
-DEFAULT_TORSO_POSITION = np.array([-1.75, 0, STANDING_HEIGHT])
-Z_AXIS = np.array([0.0, 0.0, 1.0])
 # Success condition tolerances
 POSITION_TOLERANCE = 0.2
 VELOCITY_TOLERANCE = 0.05
+SPOT_FALLEN_THRESHOLD = 0.35
 
 
 @dataclass
-class SpotRackPushConfig(SpotBaseConfig):
-    """Config for the spot rack pushing task."""
+class SpotRackPushConfig(TaskConfig):
+    """Config for Sumo's simplified Spot rack pushing analysis task."""
+
+    w_goal: float = 60.0
+    w_gripper_proximity: float = 4.0
+    w_object_velocity: float = 20.0
 
     goal_position: np.ndarray = np_1d_field(
         np.array([0.0, 0.0, DEFAULT_RACK_HEIGHT], dtype=np.float64),
@@ -42,12 +45,6 @@ class SpotRackPushConfig(SpotBaseConfig):
         xyz_vis_indices=[0, 1, 2],
         xyz_vis_defaults=[0.0, 0.0, DEFAULT_RACK_HEIGHT],
     )
-
-    w_object_orientation: float = 100.0
-    w_gripper_proximity: float = 4.0
-    w_torso_proximity: float = 0.1
-    orientation_threshold: float = 0.7
-    w_object_velocity: float = 20.0
 
 
 class SpotRackPush(SpotBase):
@@ -63,7 +60,6 @@ class SpotRackPush(SpotBase):
         self.body_pose_start = self.get_joint_position_start_index("base")
         self.object_pose_start = self.get_joint_position_start_index("tire_rack_joint")
         self.object_vel_start = self.get_joint_velocity_start_index("tire_rack_joint")
-        self.object_y_axis_start = self.get_sensor_start_index("object_y_axis")
         self.end_effector_to_object_start = self.get_sensor_start_index("sensor_arm_link_fngr")
 
     def reward(
@@ -73,61 +69,30 @@ class SpotRackPush(SpotBase):
         controls: np.ndarray,
         system_metadata: dict[str, Any] | None = None,
     ) -> np.ndarray:
-        """Reward function for the Spot rack pushing task."""
+        """Reward using only goal distance, gripper distance, and object velocity."""
         batch_size = states.shape[0]
 
-        # (batch, horizon, size)
-        # or (batch, horizon) if scalar
         qpos = states[..., : self.model.nq]
-        body_pos = qpos[..., self.body_pose_start : self.body_pose_start + 3]
         object_pos = qpos[..., self.object_pose_start : self.object_pose_start + 3]
-        object_y_axis = sensors[..., self.object_y_axis_start : self.object_y_axis_start + 3]
         object_linear_velocity = states[..., self.object_vel_start : self.object_vel_start + 3]
 
-        # Compute unit vector pointing from tire to torso
         end_effector_to_object = sensors[..., self.end_effector_to_object_start : self.end_effector_to_object_start + 3]
         gripper_proximity_reward = -self.config.w_gripper_proximity * np.linalg.norm(
             end_effector_to_object, axis=-1
         ).mean(axis=-1)
 
-        object_orientation_reward = -self.config.w_object_orientation * np.abs(
-            np.dot(object_y_axis, Z_AXIS) > self.config.orientation_threshold
-        ).sum(axis=-1)
-
         goal_reward = -self.config.w_goal * np.linalg.norm(
             object_pos - np.array(self.config.goal_position)[None, None], axis=-1
         ).mean(-1)
 
-        torso_proximity_reward = self.config.w_torso_proximity * np.linalg.norm(body_pos - object_pos, axis=-1).mean(-1)
-
         object_linear_velocity_penalty = -self.config.w_object_velocity * np.square(
             np.linalg.norm(object_linear_velocity, axis=-1).mean(-1)
         )
-        # Check if any state in the rollout has spot fallen
-        body_height = qpos[..., self.body_pose_start + 2]
-        spot_fallen_reward = -self.config.fall_penalty * (body_height <= self.config.spot_fallen_threshold).any(axis=-1)
 
-        # Compute a penalty to prefer small commands.
-        controls_reward = -self.config.w_controls * np.linalg.norm(controls, axis=-1).mean(-1)
-
-        assert object_orientation_reward.shape == (batch_size,)
         assert gripper_proximity_reward.shape == (batch_size,)
-        assert torso_proximity_reward.shape == (batch_size,)
         assert object_linear_velocity_penalty.shape == (batch_size,)
         assert goal_reward.shape == (batch_size,)
-        assert spot_fallen_reward.shape == (batch_size,)
-        assert controls_reward.shape == (batch_size,)
-
-        reward = (
-            +spot_fallen_reward
-            + goal_reward
-            + object_orientation_reward
-            + torso_proximity_reward
-            + gripper_proximity_reward
-            + object_linear_velocity_penalty
-            + controls_reward
-        )
-        return reward
+        return goal_reward + gripper_proximity_reward + object_linear_velocity_penalty
 
     @property
     def reset_pose(self) -> np.ndarray:
@@ -159,4 +124,4 @@ class SpotRackPush(SpotBase):
     def failure(self, model: MjModel, data: MjData, metadata: dict[str, Any] | None = None) -> bool:
         """Check if Spot has fallen."""
         body_height = data.qpos[self.body_pose_start + 2]
-        return body_height <= self.config.spot_fallen_threshold
+        return body_height <= SPOT_FALLEN_THRESHOLD

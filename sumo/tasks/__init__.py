@@ -29,12 +29,15 @@ SPOT_TASK_NAMES = (
     "spot_cone_push",
     "spot_rack_push",
     "spot_tire_push",
+    "spot_box_upright",
+    "spot_chair_upright",
     "spot_cone_upright",
+    "spot_rack_upright",
+    "spot_tire_upright",
     "spot_chair_ramp",
     "spot_barrier_upright",
     "spot_barrier_drag",
     "spot_tire_roll",
-    "spot_tire_upright",
     "spot_tire_stack",
     "spot_tire_rack_drag",
     "spot_rugged_box_push",
@@ -45,11 +48,14 @@ from sumo.tasks.spot.spot_barrier_drag import SpotBarrierDrag, SpotBarrierDragCo
 from sumo.tasks.spot.spot_barrier_upright import SpotBarrierUpright, SpotBarrierUprightConfig
 from sumo.tasks.spot.spot_base import SpotBase, SpotBaseConfig
 from sumo.tasks.spot.spot_box_push import SpotBoxPush, SpotBoxPushConfig
+from sumo.tasks.spot.spot_box_upright import SpotBoxUpright, SpotBoxUprightConfig
 from sumo.tasks.spot.spot_chair_push import SpotChairPush, SpotChairPushConfig
 from sumo.tasks.spot.spot_chair_ramp import SpotChairRamp, SpotChairRampConfig
+from sumo.tasks.spot.spot_chair_upright import SpotChairUpright, SpotChairUprightConfig
 from sumo.tasks.spot.spot_cone_push import SpotConePush, SpotConePushConfig
 from sumo.tasks.spot.spot_cone_upright import SpotConeUpright, SpotConeUprightConfig
 from sumo.tasks.spot.spot_rack_push import SpotRackPush, SpotRackPushConfig
+from sumo.tasks.spot.spot_rack_upright import SpotRackUpright, SpotRackUprightConfig
 from sumo.tasks.spot.spot_rugged_box_push import SpotRuggedBoxPush, SpotRuggedBoxPushConfig
 from sumo.tasks.spot.spot_tire_push import SpotTirePush, SpotTirePushConfig
 from sumo.tasks.spot.spot_tire_rack_drag import SpotTireRackDrag, SpotTireRackDragConfig
@@ -63,12 +69,15 @@ register_task("spot_chair_push", SpotChairPush, SpotChairPushConfig)
 register_task("spot_cone_push", SpotConePush, SpotConePushConfig)
 register_task("spot_rack_push", SpotRackPush, SpotRackPushConfig)
 register_task("spot_tire_push", SpotTirePush, SpotTirePushConfig)
+register_task("spot_box_upright", SpotBoxUpright, SpotBoxUprightConfig)
+register_task("spot_chair_upright", SpotChairUpright, SpotChairUprightConfig)
 register_task("spot_cone_upright", SpotConeUpright, SpotConeUprightConfig)
+register_task("spot_rack_upright", SpotRackUpright, SpotRackUprightConfig)
+register_task("spot_tire_upright", SpotTireUpright, SpotTireUprightConfig)
 register_task("spot_chair_ramp", SpotChairRamp, SpotChairRampConfig)
 register_task("spot_barrier_upright", SpotBarrierUpright, SpotBarrierUprightConfig)
 register_task("spot_barrier_drag", SpotBarrierDrag, SpotBarrierDragConfig)
 register_task("spot_tire_roll", SpotTireRoll, SpotTireRollConfig)
-register_task("spot_tire_upright", SpotTireUpright, SpotTireUprightConfig)
 register_task("spot_tire_stack", SpotTireStack, SpotTireStackConfig)
 register_task("spot_tire_rack_drag", SpotTireRackDrag, SpotTireRackDragConfig)
 register_task("spot_rugged_box_push", SpotRuggedBoxPush, SpotRuggedBoxPushConfig)
