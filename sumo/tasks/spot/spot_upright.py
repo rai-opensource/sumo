@@ -1,13 +1,16 @@
 # Copyright (c) 2025-2026 Robotics and AI Institute LLC dba RAI Institute. All rights reserved.
 
 from dataclasses import dataclass
+from typing import Callable
 
 import numpy as np
 from judo.tasks.base import TaskConfig
 from mujoco import MjModel, mjtGeom
 
 Z_AXIS = np.array([0.0, 0.0, 1.0])
+Y_AXIS = np.array([0.0, 1.0, 0.0])
 GROUND_CLEARANCE_MARGIN = 0.02
+MAX_RESET_ORIENTATION_ATTEMPTS = 1000
 
 
 @dataclass
@@ -25,6 +28,18 @@ def random_unit_quat() -> np.ndarray:
     if quat[0] < 0:
         quat = -quat
     return quat
+
+
+def z_axis_is_upright(quat: np.ndarray, tolerance: float) -> bool:
+    """Return whether the body z-axis already satisfies an upright task."""
+    object_z_axis = quat_to_mat(quat) @ Z_AXIS
+    return bool(object_z_axis[2] >= 1.0 - tolerance)
+
+
+def y_axis_is_horizontal(quat: np.ndarray, tolerance: float) -> bool:
+    """Return whether the body y-axis already satisfies a tire upright task."""
+    object_y_axis = quat_to_mat(quat) @ Y_AXIS
+    return bool(abs(object_y_axis[2]) <= tolerance)
 
 
 def quat_to_mat(quat: np.ndarray) -> np.ndarray:
@@ -91,9 +106,17 @@ def random_object_pose(
     model: MjModel,
     body_name: str,
     xy: np.ndarray,
+    reject_orientation: Callable[[np.ndarray], bool] | None = None,
 ) -> np.ndarray:
     """Build a free-joint pose with random attitude and ground clearance."""
-    quat = random_unit_quat()
+    for _ in range(MAX_RESET_ORIENTATION_ATTEMPTS):
+        quat = random_unit_quat()
+        if reject_orientation is None or not reject_orientation(quat):
+            break
+    else:
+        msg = f"Failed to sample a valid reset orientation for {body_name}"
+        raise RuntimeError(msg)
+
     z = ground_clearance_height(model, body_name, quat)
     return np.array([xy[0], xy[1], z, *quat])
 

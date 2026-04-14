@@ -23,6 +23,7 @@ from sumo.tasks.spot.spot_upright import (
     gripper_distance_reward,
     random_object_pose,
     sample_annulus_xy,
+    z_axis_is_upright,
     z_axis_orientation_reward,
 )
 
@@ -83,6 +84,7 @@ class SpotConeUpright(SpotBase[SpotConeUprightConfig]):
             self.model,
             "traffic_cone",
             sample_annulus_xy(RADIUS_MIN, RADIUS_MAX),
+            reject_orientation=lambda quat: z_axis_is_upright(quat, ORIENTATION_TOLERANCE),
         )
         spot_pos = DEFAULT_SPOT_POS + np.random.randn(2) * 0.001
         return np.array(

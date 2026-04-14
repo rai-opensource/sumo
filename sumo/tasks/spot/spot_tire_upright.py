@@ -14,6 +14,7 @@ from sumo.tasks.spot.spot_upright import (
     horizontal_axis_orientation_reward,
     random_object_pose,
     sample_annulus_xy,
+    y_axis_is_horizontal,
 )
 
 ORIENTATION_TOLERANCE = 0.1
@@ -59,7 +60,12 @@ class SpotTireUpright(SpotTirePush):
     @property
     def reset_pose(self) -> np.ndarray:
         """Reset pose with a random tire attitude that clears the ground."""
-        object_pose = random_object_pose(self.model, "tire", sample_annulus_xy(RADIUS_MIN, RADIUS_MAX))
+        object_pose = random_object_pose(
+            self.model,
+            "tire",
+            sample_annulus_xy(RADIUS_MIN, RADIUS_MAX),
+            reject_orientation=lambda quat: y_axis_is_horizontal(quat, ORIENTATION_TOLERANCE),
+        )
         robot_pose = np.array([0.0, 0.0, STANDING_HEIGHT, 1.0, 0.0, 0.0, 0.0])
         return np.array([*robot_pose, *LEGS_STANDING_POS, *self.reset_arm_pos, *object_pose])
 

@@ -3,6 +3,7 @@ from dataclasses import fields
 import numpy as np
 import pytest
 from judo.tasks import get_registered_tasks
+from mujoco import mj_forward
 
 from sumo.tasks.g1.g1_base import G1Base, G1BaseConfig
 from sumo.tasks.g1.g1_box import G1Box, G1BoxConfig
@@ -389,6 +390,35 @@ def test_simplified_spot_upright_reset_randomizes_attitude_without_ground_penetr
     np.testing.assert_allclose(np.linalg.norm(quat_a), 1.0)
     assert not np.allclose(quat_a, quat_b)
     assert z_a >= ground_clearance_height(task.model, body_name, quat_a)
+
+
+@pytest.mark.parametrize(
+    "task_cls,config_cls,body_name,orientation_kind",
+    SIMPLIFIED_SPOT_UPRIGHT_TASK_CONFIGS,
+    ids=lambda x: x.__name__ if hasattr(x, "__name__") else str(x),
+)
+def test_simplified_spot_upright_reset_rejects_already_successful_orientation(
+    task_cls,
+    config_cls,
+    body_name,
+    orientation_kind,
+    monkeypatch,
+):
+    task = task_cls()
+    object_pose_idx = _get_task_attr(task, "object_pose_idx", "object_pose_start")
+    already_successful_quat = np.array([1.0, 0.0, 0.0, 0.0])
+    fallen_quat = np.array([np.sqrt(0.5), np.sqrt(0.5), 0.0, 0.0])
+    quat_samples = iter([already_successful_quat, fallen_quat])
+
+    monkeypatch.setattr("sumo.tasks.spot.spot_upright.random_unit_quat", lambda: next(quat_samples))
+
+    reset_pose = task.reset_pose
+
+    np.testing.assert_allclose(reset_pose[object_pose_idx + 3 : object_pose_idx + 7], fallen_quat)
+    task.data.qpos[:] = reset_pose
+    task.data.qvel[:] = 0.0
+    mj_forward(task.model, task.data)
+    assert not task.success(task.model, task.data)
 
 
 @pytest.mark.parametrize(
