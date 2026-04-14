@@ -47,11 +47,11 @@ class SpotConePushConfig(TaskConfig):
     )
 
 
-class SpotConePush(SpotBase):
+class SpotConePush(SpotBase[SpotConePushConfig]):
     """Task getting Spot to push a cone to a goal location."""
 
     name = "spot_cone_push"
-    config_t = SpotConePushConfig
+    config_t: type[SpotConePushConfig] = SpotConePushConfig
     config: SpotConePushConfig
 
     def __init__(self, config: SpotConePushConfig | None = None) -> None:

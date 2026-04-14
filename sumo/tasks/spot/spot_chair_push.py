@@ -42,12 +42,12 @@ class SpotChairPushConfig(TaskConfig):
     )
 
 
-class SpotChairPush(SpotBase):
+class SpotChairPush(SpotBase[SpotChairPushConfig]):
     """Task getting Spot to push a yellow chair to a desired goal location."""
 
     name: str = "spot_chair_push"
     config_t: type[SpotChairPushConfig] = SpotChairPushConfig  # type: ignore[assignment]
-    config: SpotChairPushConfig
+    config: Any
 
     def __init__(
         self,

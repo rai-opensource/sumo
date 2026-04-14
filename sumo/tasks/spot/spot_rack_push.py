@@ -47,12 +47,12 @@ class SpotRackPushConfig(TaskConfig):
     )
 
 
-class SpotRackPush(SpotBase):
+class SpotRackPush(SpotBase[SpotRackPushConfig]):
     """Task getting Spot to push a rack to a goal location."""
 
     name = "spot_rack_push"
-    config_t = SpotRackPushConfig
-    config: SpotRackPushConfig
+    config_t: type[SpotRackPushConfig] = SpotRackPushConfig
+    config: Any
 
     def __init__(self, config: SpotRackPushConfig | None = None) -> None:
         super().__init__(model_path=XML_PATH, use_arm=True, config=config)

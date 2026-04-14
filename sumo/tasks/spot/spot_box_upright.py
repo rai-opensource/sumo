@@ -1,7 +1,7 @@
 # Copyright (c) 2025-2026 Robotics and AI Institute LLC dba RAI Institute. All rights reserved.
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 from mujoco import MjData, MjModel
@@ -35,7 +35,7 @@ class SpotBoxUpright(SpotBoxPush):
     config: SpotBoxUprightConfig
 
     def __init__(self, config: SpotBoxUprightConfig | None = None) -> None:
-        super().__init__(config=config)
+        super().__init__(config=cast(Any, config))
         self.object_z_axis_idx = self.get_sensor_start_index("object_z_axis")
 
     def reward(

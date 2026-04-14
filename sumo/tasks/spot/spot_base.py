@@ -6,9 +6,10 @@ import hashlib
 import re
 import tempfile
 from pathlib import Path
-from typing import Any, Generic, TypeVar
+from typing import Any, Generic, TypeVar, cast
 
 from judo import MODEL_PATH as JUDO_MODEL_PATH
+from judo.tasks.base import TaskConfig
 from judo.tasks.spot.spot_base import SpotBase as _JudoSpotBase
 from judo.tasks.spot.spot_base import SpotBaseConfig
 
@@ -16,7 +17,7 @@ from sumo import MODEL_PATH
 
 XML_PATH = str(JUDO_MODEL_PATH / "xml" / "spot_primitive" / "robot.xml")
 
-ConfigT = TypeVar("ConfigT", bound=SpotBaseConfig)
+ConfigT = TypeVar("ConfigT", bound=TaskConfig)
 
 _INCLUDE_RE = re.compile(r'(<include\s+file=")([^"]+)(")')
 _SPOT_PRIMITIVE_FILES = {
@@ -96,6 +97,9 @@ class SpotAssetMixin:
 class SpotBase(SpotAssetMixin, _JudoSpotBase, Generic[ConfigT]):
     """Sumo SpotBase wrapper that composes local task XML with public Spot definitions."""
 
+    config_t: type[ConfigT]  # pyright: ignore[reportIncompatibleVariableOverride]
+    config: ConfigT
+
     @staticmethod
     def _is_relative_to(path: Path, parent: Path) -> bool:
         try:
@@ -158,7 +162,7 @@ class SpotBase(SpotAssetMixin, _JudoSpotBase, Generic[ConfigT]):
         use_gripper: bool = False,
         use_legs: bool = False,
         use_torso: bool = False,
-        config: SpotBaseConfig | None = None,
+        config: ConfigT | None = None,
     ) -> None:
         super().__init__(
             model_path=str(self._materialize_model_path(model_path)),
@@ -166,5 +170,8 @@ class SpotBase(SpotAssetMixin, _JudoSpotBase, Generic[ConfigT]):
             use_gripper=use_gripper,
             use_legs=use_legs,
             use_torso=use_torso,
-            config=config,
+            config=cast(Any, config),
         )
+
+
+__all__ = ["SpotAssetMixin", "SpotBase", "SpotBaseConfig"]

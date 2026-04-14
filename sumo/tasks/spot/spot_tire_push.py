@@ -48,12 +48,12 @@ class SpotTirePushConfig(TaskConfig):
     )
 
 
-class SpotTirePush(SpotBase):
+class SpotTirePush(SpotBase[SpotTirePushConfig]):
     """Task getting Spot to push a tire to a goal location."""
 
     name = "spot_tire_push"
-    config_t = SpotTirePushConfig
-    config: SpotTirePushConfig
+    config_t: type[SpotTirePushConfig] = SpotTirePushConfig
+    config: Any
 
     def __init__(self, config: SpotTirePushConfig | None = None) -> None:
         super().__init__(model_path=XML_PATH, use_arm=True, config=config)

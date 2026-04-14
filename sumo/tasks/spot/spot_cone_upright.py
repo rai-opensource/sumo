@@ -40,7 +40,7 @@ class SpotConeUprightConfig(SpotUprightConfig):
     """Config for Sumo's simplified Spot cone upright analysis task."""
 
 
-class SpotConeUpright(SpotBase):
+class SpotConeUpright(SpotBase[SpotConeUprightConfig]):
     """Task getting Spot to upright a fallen traffic cone."""
 
     name: str = "spot_cone_upright"

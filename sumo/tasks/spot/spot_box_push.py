@@ -1,7 +1,7 @@
 # Copyright (c) 2025-2026 Robotics and AI Institute LLC dba RAI Institute. All rights reserved.
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 from judo.tasks.base import TaskConfig
@@ -33,10 +33,10 @@ class SpotBoxPush(SpotAssetMixin, _JudoSpotBoxPush):
     """Spot box pushing with Sumo's simplified analysis reward."""
 
     config_t: type[SpotBoxPushConfig] = SpotBoxPushConfig  # type: ignore[assignment]
-    config: SpotBoxPushConfig
+    config: Any
 
     def __init__(self, config: SpotBoxPushConfig | None = None) -> None:
-        super().__init__(config=config)
+        super().__init__(config=cast(Any, config))
         self.object_vel_idx = self.get_joint_velocity_start_index("box_joint")
 
     def reward(

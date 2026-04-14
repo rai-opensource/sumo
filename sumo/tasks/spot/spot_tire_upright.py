@@ -1,7 +1,7 @@
 # Copyright (c) 2025-2026 Robotics and AI Institute LLC dba RAI Institute. All rights reserved.
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 from mujoco import MjData, MjModel
@@ -32,7 +32,7 @@ class SpotTireUpright(SpotTirePush):
     config: SpotTireUprightConfig
 
     def __init__(self, config: SpotTireUprightConfig | None = None) -> None:
-        super().__init__(config=config)
+        super().__init__(config=cast(Any, config))
         self.object_y_axis_idx = self.get_sensor_start_index("object_y_axis")
 
     def reward(
