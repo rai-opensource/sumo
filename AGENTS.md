@@ -1,26 +1,31 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-`sumo/` is the active package. Put task code in `sumo/tasks/g1/` or `sumo/tasks/spot/`, controller wrappers in `sumo/controller/`, CLI and MPC entrypoints in `sumo/cli.py` and `sumo/run_mpc/`, and MuJoCo XML/mesh assets under `sumo/models/`. `g1_extensions/` contains the optional pybind11 extension for G1 backends. `tests/` holds the pytest suite. Treat `judo-private/` as an old fork used only as migration reference; match new code to the public `judo-rai` repo instead. Use `.judo-src/` as the local reference checkout when porting behavior.
+`sumo/` is the main Python package. Task implementations live in `sumo/tasks/g1/` and `sumo/tasks/spot/`; shared controller code is in `sumo/controller/`; CLI and headless MPC entry points are `sumo/cli.py` and `sumo/run_mpc/`. MuJoCo XML and mesh assets are packaged under `sumo/models/`. Native G1 rollout bindings live in `g1_extensions/` with CMake/pybind11 sources. Tests belong in `tests/`, while generated run artifacts should stay in `out/`, `outputs/`, or `run_mpc/results/`.
 
 ## Build, Test, and Development Commands
-Use `pixi` by default:
+Use Pixi as the default environment manager.
 
 ```bash
-pixi install
-pixi run build
-pixi run build-judo-ext
-pixi run pytest tests/ -v
-pixi run sumo --init-task g1_box --num-episodes 1
+pixi install                         # create the default dev environment
+pixi run build                       # build g1_extensions and Judo MuJoCo extensions
+pixi run sumo task=spot_box_push     # launch the interactive app
+pixi run python -m sumo.run_mpc --init-task=g1_box --num-episodes=2
+pixi run pytest tests/ -v            # run the test suite
+pixi run pre-commit run --all-files  # run Ruff, formatting, and whitespace hooks
+pixi run pyright sumo/               # run static type checks
 ```
 
-`pixi run build` compiles `g1_extensions`; `pixi run build-judo-ext` builds Judo's `mujoco_extensions` backend for Spot tasks. `pixi install -e dev` remains equivalent to `pixi install` for this repo, but `pixi run` without `-e` already targets the default full app environment. Use `pip install -e .` only as a lightweight fallback when you do not need the managed `pixi` environment.
+Run `pixi run build` before G1 or Spot simulations that require compiled extension backends.
 
 ## Coding Style & Naming Conventions
-Write Python with 4-space indentation, explicit imports, and type-aware dataclass configs. Follow existing naming: `snake_case` for modules/functions, `PascalCase` for classes, and `*Config` for task/config dataclasses such as `G1BoxConfig`. New task modules should follow patterns like `g1_box.py` or `spot_table_drag.py`. Prefer `ruff check .` before submitting changes. When porting code, preserve `judo-rai` APIs and conventions first, even if `judo-private/` differs.
+Python uses 4-space indentation, explicit imports, and Ruff formatting with a 120-character line length. Keep module and function names in `snake_case`, classes in `PascalCase`, and task configs named with a `Config` suffix, for example `G1BoxConfig`. New task files should follow existing patterns such as `g1_table_push.py` or `spot_tire_roll.py`. Prefer dataclass-style configs and match public `judo-rai` APIs rather than introducing local compatibility shims.
 
 ## Testing Guidelines
-Add tests in `tests/` and name files `test_*.py`. Cover imports, task registration, and task-specific behavior such as `reset()`, `reward()`, and control shape. Mark extension-only tests with `@pytest.mark.g1_extensions`; `tests/conftest.py` skips them when `g1_extensions` is unavailable. When adding a task, update registration in `sumo/tasks/__init__.py` and add at least one smoke test.
+Use pytest. Name files `test_*.py` and tests `test_*`. Add coverage for imports, task registration, reset behavior, reward shape, and control dimensions when adding or changing tasks. Mark tests that require the optional native G1 extension with `@pytest.mark.g1_extensions`; `tests/conftest.py` skips those when the extension is not built. Run `pixi run pytest -rsx` to mirror CI output.
 
 ## Commit & Pull Request Guidelines
-The repo history is minimal, so use short imperative commit subjects. Scoped messages are preferred, for example `feat(tasks): port spot_table_drag`. PRs should summarize the port or feature, note what was aligned to public `judo-rai`, list commands run, and include screenshots or logs for simulator-facing changes. Avoid mixing migration cleanup with unrelated refactors.
+The existing history uses short, imperative subjects such as `Update README.md` and `clean up paper tasks to match paper rewards`. Keep commits focused and avoid mixing task behavior changes with cleanup. Before pushing or requesting review, run `pixi run pre-commit run --all-files` and `pixi run pyright sumo/` locally. PRs should include a concise summary, commands run, and screenshots or logs for simulator-facing changes.
+
+## Security & Configuration Tips
+Do not commit generated build directories, local `.judo-src/` checkouts, cache folders, or large simulation outputs. Keep dependency and build changes in `pyproject.toml`, `pixi.lock`, and the relevant CMake files together so CI can reproduce them.
