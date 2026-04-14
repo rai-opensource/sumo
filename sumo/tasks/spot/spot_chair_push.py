@@ -117,6 +117,8 @@ class SpotChairPush(SpotBase):
         """Check if the yellow chair is in the goal position."""
         object_pos = data.qpos[self.object_pose_idx : self.object_pose_idx + 3]
         object_vel = data.qvel[self.object_vel_idx - self.model.nq : self.object_vel_idx - self.model.nq + 3]
-        position_check = np.linalg.norm(object_pos - self.config.goal_position, axis=-1, ord=np.inf) < POSITION_TOLERANCE
+        position_check = (
+            np.linalg.norm(object_pos - self.config.goal_position, axis=-1, ord=np.inf) < POSITION_TOLERANCE
+        )
         velocity_check = np.linalg.norm(object_vel, axis=-1) < VELOCITY_TOLERANCE
         return bool(position_check and velocity_check)

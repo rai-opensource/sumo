@@ -284,14 +284,11 @@ def test_simplified_spot_push_reward_uses_analysis_terms(task_cls, config_cls):
     object_pos = qpos[..., object_pose_idx : object_pose_idx + 3]
     object_linear_velocity = states[..., object_vel_idx : object_vel_idx + 3]
 
-    expected = (
-        -task.config.w_goal
-        * np.linalg.norm(object_pos - np.asarray(task.config.goal_position)[None, None], axis=-1).mean(-1)
-    )
+    expected = -task.config.w_goal * np.linalg.norm(
+        object_pos - np.asarray(task.config.goal_position)[None, None], axis=-1
+    ).mean(-1)
     expected += -task.config.w_gripper_proximity * _gripper_distance(task, sensors, object_pos).mean(-1)
-    expected += -task.config.w_object_velocity * np.square(
-        np.linalg.norm(object_linear_velocity, axis=-1).mean(-1)
-    )
+    expected += -task.config.w_object_velocity * np.square(np.linalg.norm(object_linear_velocity, axis=-1).mean(-1))
 
     np.testing.assert_allclose(task.reward(states, sensors, controls), expected)
     np.testing.assert_allclose(task.reward(states, sensors, controls + 100.0), expected)
