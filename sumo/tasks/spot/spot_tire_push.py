@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from typing import Any
 
 import numpy as np
-from judo.tasks.base import TaskConfig
 from judo.utils.fields import np_1d_field
 from mujoco import MjData, MjModel
 
@@ -13,6 +12,12 @@ from sumo.tasks.spot.spot_base import SpotBase
 from sumo.tasks.spot.spot_constants import (
     LEGS_STANDING_POS,
     STANDING_HEIGHT,
+)
+from sumo.tasks.spot.spot_push import (
+    SpotPushConfig,
+    goal_distance_reward,
+    gripper_distance_reward,
+    object_linear_velocity_reward,
 )
 
 XML_PATH = str(MODEL_PATH / "xml/spot_tasks/spot_tire.xml")
@@ -29,12 +34,8 @@ SPOT_FALLEN_THRESHOLD = 0.35
 
 
 @dataclass
-class SpotTirePushConfig(TaskConfig):
+class SpotTirePushConfig(SpotPushConfig):
     """Config for Sumo's simplified Spot tire pushing analysis task."""
-
-    w_goal: float = 60.0
-    w_gripper_proximity: float = 4.0
-    w_object_velocity: float = 20.0
 
     goal_position: np.ndarray = np_1d_field(
         np.array([0.0, 0.0, TIRE_RADIUS], dtype=np.float64),
@@ -78,17 +79,12 @@ class SpotTirePush(SpotBase[SpotTirePushConfig]):
         object_linear_velocity = states[..., self.object_vel_start : self.object_vel_start + 3]
 
         end_effector_to_object = sensors[..., self.end_effector_to_object_start : self.end_effector_to_object_start + 3]
-        gripper_proximity_reward = -self.config.w_gripper_proximity * np.linalg.norm(
-            end_effector_to_object, axis=-1
-        ).mean(axis=-1)
-
-        goal_reward = -self.config.w_goal * np.linalg.norm(
-            object_pos - np.array(self.config.goal_position)[None, None], axis=-1
-        ).mean(-1)
-
-        object_linear_velocity_penalty = -self.config.w_object_velocity * np.square(
-            np.linalg.norm(object_linear_velocity, axis=-1).mean(-1)
+        gripper_proximity_reward = gripper_distance_reward(
+            self.config,
+            np.linalg.norm(end_effector_to_object, axis=-1),
         )
+        goal_reward = goal_distance_reward(self.config, object_pos)
+        object_linear_velocity_penalty = object_linear_velocity_reward(self.config, object_linear_velocity)
 
         assert gripper_proximity_reward.shape == (batch_size,)
         assert object_linear_velocity_penalty.shape == (batch_size,)

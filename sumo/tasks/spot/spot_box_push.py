@@ -4,21 +4,23 @@ from dataclasses import dataclass
 from typing import Any, cast
 
 import numpy as np
-from judo.tasks.base import TaskConfig
 from judo.tasks.spot.spot_box_push import SpotBoxPush as _JudoSpotBoxPush
 from judo.tasks.spot.spot_constants import BOX_HALF_LENGTH
 from judo.utils.fields import np_1d_field
 
 from sumo.tasks.spot.spot_base import SpotAssetMixin
+from sumo.tasks.spot.spot_push import (
+    SpotPushConfig,
+    goal_distance_reward,
+    gripper_distance_reward,
+    object_linear_velocity_reward,
+)
 
 
 @dataclass
-class SpotBoxPushConfig(TaskConfig):
+class SpotBoxPushConfig(SpotPushConfig):
     """Configuration for Sumo's simplified Spot box pushing analysis task."""
 
-    w_goal: float = 60.0
-    w_gripper_proximity: float = 4.0
-    w_object_velocity: float = 20.0
     goal_position: np.ndarray = np_1d_field(
         np.array([0.0, 0.0, BOX_HALF_LENGTH]),
         names=["x", "y", "z"],
@@ -54,15 +56,11 @@ class SpotBoxPush(SpotAssetMixin, _JudoSpotBoxPush):
         gripper_pos = sensors[..., self.gripper_pos_idx : self.gripper_pos_idx + 3]
         object_linear_velocity = states[..., self.object_vel_idx : self.object_vel_idx + 3]
 
-        goal_reward = -self.config.w_goal * np.linalg.norm(
-            object_pos - self.config.goal_position[None, None], axis=-1
-        ).mean(-1)
-        gripper_proximity_reward = -self.config.w_gripper_proximity * np.linalg.norm(
-            gripper_pos - object_pos, axis=-1
-        ).mean(-1)
-        object_linear_velocity_penalty = -self.config.w_object_velocity * np.square(
-            np.linalg.norm(object_linear_velocity, axis=-1).mean(-1)
+        goal_reward = goal_distance_reward(self.config, object_pos)
+        gripper_proximity_reward = gripper_distance_reward(
+            self.config, np.linalg.norm(gripper_pos - object_pos, axis=-1)
         )
+        object_linear_velocity_penalty = object_linear_velocity_reward(self.config, object_linear_velocity)
 
         assert goal_reward.shape == (batch_size,)
         assert gripper_proximity_reward.shape == (batch_size,)

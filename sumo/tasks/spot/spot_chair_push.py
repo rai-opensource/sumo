@@ -9,13 +9,18 @@ from dataclasses import dataclass
 from typing import Any
 
 import numpy as np
-from judo.tasks.base import TaskConfig
 from judo.utils.fields import np_1d_field
 from mujoco import MjData, MjModel
 
 from sumo import MODEL_PATH
 from sumo.tasks.spot.spot_base import SpotBase
 from sumo.tasks.spot.spot_constants import LEGS_STANDING_POS, STANDING_HEIGHT
+from sumo.tasks.spot.spot_push import (
+    SpotPushConfig,
+    goal_distance_reward,
+    gripper_distance_reward,
+    object_linear_velocity_reward,
+)
 
 XML_PATH = str(MODEL_PATH / "xml/spot_tasks/spot_yellow_chair.xml")
 
@@ -26,12 +31,9 @@ VELOCITY_TOLERANCE = 0.05
 
 
 @dataclass
-class SpotChairPushConfig(TaskConfig):
+class SpotChairPushConfig(SpotPushConfig):
     """Configuration for Sumo's simplified Spot chair pushing analysis task."""
 
-    w_goal: float = 60.0
-    w_gripper_proximity: float = 4.0
-    w_object_velocity: float = 20.0
     goal_position: np.ndarray = np_1d_field(
         np.array([0.0, 0.0, 0.0]),
         names=["x", "y", "z"],
@@ -75,22 +77,16 @@ class SpotChairPush(SpotBase[SpotChairPushConfig]):
         object_linear_velocity = states[..., self.object_vel_idx : self.object_vel_idx + 3]
         gripper_pos = sensors[..., self.gripper_pos_idx : self.gripper_pos_idx + 3]
 
-        goal_reward = -self.config.w_goal * np.linalg.norm(
-            object_pos - self.config.goal_position[None, None], axis=-1
-        ).mean(-1)
-
-        gripper_proximity_reward = -self.config.w_gripper_proximity * np.linalg.norm(
-            gripper_pos - object_pos, axis=-1
-        ).mean(-1)
-
-        object_linear_velocity_reward = -self.config.w_object_velocity * np.square(
-            np.linalg.norm(object_linear_velocity, axis=-1).mean(-1)
+        goal_reward = goal_distance_reward(self.config, object_pos)
+        gripper_proximity_reward = gripper_distance_reward(
+            self.config, np.linalg.norm(gripper_pos - object_pos, axis=-1)
         )
+        velocity_reward = object_linear_velocity_reward(self.config, object_linear_velocity)
 
         assert goal_reward.shape == (batch_size,)
         assert gripper_proximity_reward.shape == (batch_size,)
-        assert object_linear_velocity_reward.shape == (batch_size,)
-        return goal_reward + gripper_proximity_reward + object_linear_velocity_reward
+        assert velocity_reward.shape == (batch_size,)
+        return goal_reward + gripper_proximity_reward + velocity_reward
 
     @property
     def reset_pose(self) -> np.ndarray:
