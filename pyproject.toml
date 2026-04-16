@@ -11,7 +11,7 @@ version = "0.0.1"
 dependencies = [
     "judo-rai @ git+https://github.com/bdaiinstitute/judo.git@dta/fix_for_sumo",
     "numpy",
-    "mujoco",
+    "mujoco>=3.5.0, <3.6.0",
     "h5py",
     "tyro",
     "tqdm",
