@@ -1,8 +1,16 @@
 # Sumo 🥋
-Disclaimer: this code is released accompanying a paper submission only. The paper itself can be found [here]().
 
-`sumo`🥋 is a research codebase for whole-body loco-manipulation built on
-[`judo`🥋](https://github.com/bdaiinstitute/judo).
+<p align="center">
+  <a href="https://arxiv.org/abs/2604.08508"><img src="https://img.shields.io/badge/Paper-arXiv-b31b1b.svg" alt="Paper"></a>
+  <a href="https://sumo.rai-inst.com"><img src="https://img.shields.io/badge/Project-Website-4c84f3.svg" alt="Project Website"></a>
+  <a href="https://www.youtube.com/watch?v=eKUSpB9G7Rk"><img src="https://img.shields.io/badge/Video-Watch-ff0000.svg" alt="Demo Video"></a>
+</p>
+
+<p align="center">
+  <img src="asset/sumo.gif" alt="task dropdown" width="640">
+</p>
+
+`sumo`🥋 is a research codebase released along with our [paper](https://arxiv.org/abs/2604.08508) on whole-body loco-manipulation.
 
 ## Install
 
@@ -65,9 +73,11 @@ Results are saved to `run_mpc/results/` by default as HDF5 files. Use `--help` t
 pixi run pytest tests/ -v
 ```
 
+Disclaimer: this code is released accompanying a paper submission only.
+
 ## Reference
 
-If you find this codebase helpful, please consider citing the SUMO paper.
+If you find this codebase helpful, please consider citing our paper.
 
 ```bibtex
 @article{zhang2026sumo,
