@@ -1,8 +1,16 @@
 # Sumo 🥋
-Disclaimer: this code is released accompanying a paper submission only. The paper itself can be found [here]().
 
-`sumo`🥋 is a research codebase for whole-body loco-manipulation built on
-[`judo`🥋](https://github.com/bdaiinstitute/judo).
+<p align="center">
+  <a href="https://arxiv.org/abs/2604.08508"><img src="https://img.shields.io/badge/Paper-arXiv-b31b1b.svg" alt="Paper"></a>
+  <a href="https://sumo.rai-inst.com"><img src="https://img.shields.io/badge/Project-Website-4c84f3.svg" alt="Project Website"></a>
+  <a href="https://www.youtube.com/watch?v=eKUSpB9G7Rk"><img src="https://img.shields.io/badge/Video-Watch-ff0000.svg" alt="Demo Video"></a>
+</p>
+
+<p align="center">
+  <img src="asset/sumo.gif" alt="task dropdown" width="640">
+</p>
+
+`sumo`🥋 is a research codebase released along with our [paper](https://arxiv.org/abs/2604.08508) on whole-body loco-manipulation.
 
 ## Install
 
@@ -65,15 +73,18 @@ Results are saved to `run_mpc/results/` by default as HDF5 files. Use `--help` t
 pixi run pytest tests/ -v
 ```
 
+Disclaimer: this code is released accompanying a paper submission only.
+
 ## Reference
 
-If you find this codebase helpful, please consider citing the SUMO paper.
+If you find this codebase helpful, please consider citing our paper.
 
 ```bibtex
 @article{zhang2026sumo,
-  title={Sumo: Dynamic and Generalizable Whole-Body Loco-Manipulation},
-  author={John Z. Zhang and Maks Sorokin and Jan Brudigam and Brandon Hung and Stephen Phillips and Dmitry Yershov and Farzad Niroui and Tong Zhao and Leonor Fermoselle and Xinghao Zhu and Chao Cao and Duy Ta and Tao Pang and Jiuguang Wang and Preston Culbertson and Zachary Manchester and Simon Le Cleac'h},
-  year={2026},
-  note={TODO: add arXiv link}
+  title = {Sumo: Dynamic and Generalizable Whole-Body Loco-Manipulation},
+  author = {Zhang, John Z. and Sorokin, Maks and Br{\"u}digam, Jan and Hung, Brandon and Phillips, Stephen and Yershov, Dmitry and Niroui, Farzad and Zhao, Tong and Fermoselle, Leonor and Zhu, Xinghao and Cao, Chao and Ta, Duy and Pang, Tao and Wang, Jiuguang and Culbertson, Preston and Manchester, Zachary and Le Cl\'eac'h, Simon},
+  journal = {arXiv preprint arXiv:2604.08508},
+  year = {2026},
+  url = {https://arxiv.org/abs/2604.08508}
 }
 ```
