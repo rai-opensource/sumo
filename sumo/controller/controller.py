@@ -4,8 +4,6 @@
 
 from __future__ import annotations
 
-from typing import Literal
-
 from judo.controller.controller import Controller, ControllerConfig, make_spline
 from judo.controller.controller import make_controller as _judo_make_controller
 from omegaconf import DictConfig

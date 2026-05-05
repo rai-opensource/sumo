@@ -246,7 +246,9 @@ def run_mpc(config: RunMPCConfig) -> list[dict]:
     # Create controller
     controller_config = ControllerConfig()
     controller_config.set_override(config.init_task)
-    controller = Controller(controller_config, task, optimizer, rollout_backend_registry={"mujoco_g1": G1RolloutBackend})
+    controller = Controller(
+        controller_config, task, optimizer, rollout_backend_registry={"mujoco_g1": G1RolloutBackend}
+    )
 
     # Set up visualization
     viser_model = None

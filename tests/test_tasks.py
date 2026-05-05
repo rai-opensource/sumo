@@ -435,10 +435,10 @@ def test_spot_task_ctrlrange(task_cls, config_cls):
 
 @pytest.mark.parametrize("task_name", REGISTERED_SPOT_TASK_NAMES)
 def test_registered_spot_task_instantiation(task_name):
-    task_cls, config_cls = get_registered_tasks()[task_name]
-    task = task_cls()
+    registration = get_registered_tasks()[task_name]
+    task = registration.task_type()
     assert task.model is not None
-    assert isinstance(task.config, config_cls)
+    assert isinstance(task.config, registration.task_config_type)
 
 
 @pytest.mark.g1_extensions
