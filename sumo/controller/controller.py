@@ -18,7 +18,6 @@ def make_controller(
     init_optimizer: str,
     task_registration_cfg: DictConfig | None = None,
     optimizer_registration_cfg: DictConfig | None = None,
-    rollout_backend: Literal["mujoco", "mujoco_hierarchical", "mujoco_g1"] = "mujoco",
 ) -> Controller:
     """Make a controller with G1 backend support."""
     return _judo_make_controller(
@@ -26,7 +25,6 @@ def make_controller(
         init_optimizer=init_optimizer,
         task_registration_cfg=task_registration_cfg,
         optimizer_registration_cfg=optimizer_registration_cfg,
-        rollout_backend=rollout_backend,
         rollout_backend_registry={"mujoco_g1": G1RolloutBackend},
     )
 

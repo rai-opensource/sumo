@@ -11,7 +11,7 @@ version = "0.0.1"
 dependencies = [
     "judo-rai @ git+https://github.com/rai-opensource/judo.git@dta/fix_for_sumo",
     "numpy",
-    "mujoco>=3.5.0, <3.6.0",
+    "mujoco>=3.6.0,<3.7",
     "h5py",
     "tyro",
     "tqdm",
@@ -74,7 +74,7 @@ sumo = "sumo"
 cmd = """
 sh -c '
 if [ ! -d .judo-src ]; then
-  git clone --depth 1 --branch dta/fix_for_sumo https://github.com/bdaiinstitute/judo.git .judo-src
+  git clone --depth 1 --branch dta/fix_for_sumo https://github.com/rai-opensource/judo.git .judo-src
 fi &&
 sed -i.bak "s|libonnxruntime.so\\*|libonnxruntime.*|" .judo-src/mujoco_extensions/CMakeLists.txt &&
 mkdir -p .judo-src/build &&
@@ -126,6 +126,42 @@ depends-on = ["build-g1-ext", "build-judo-ext"]
 [tool.pixi.tasks.clean]
 cwd = "g1_extensions"
 cmd = "rm -rf build/"
+
+# Remove all C++ build artifacts (g1_extensions and judo mujoco_extensions),
+# the installed extension .so files in site-packages, and Python caches.
+# Use this when mujoco / judo / pybind11 versions change to avoid stale objects.
+[tool.pixi.tasks.clean-build]
+cmd = """
+sh -c '
+set -e
+rm -rf g1_extensions/build/
+rm -rf .judo-src/build/
+rm -f .judo-src/mujoco_extensions/policy_rollout/policy_rollout_pybind*.so
+SITE=$(python -c "import site; print(site.getsitepackages()[0])" 2>/dev/null || true)
+if [ -n "$SITE" ]; then
+  rm -f "$SITE"/mujoco_extensions/policy_rollout/policy_rollout_pybind*.so
+  rm -f "$SITE"/g1_extensions/_g1_extensions*.so
+fi
+find . -path ./.pixi -prune -o -type d -name __pycache__ -print -exec rm -rf {} + 2>/dev/null || true
+echo "Cleaned C++ build artifacts and Python caches."
+'
+"""
+
+# Full nuke: clean-build + remove the cloned judo source AND the entire pixi env.
+# Forces fresh judo clone and full reinstall on next `pixi install` / `pixi run build`.
+# Use when judo git revision in pixi.lock has been updated or when site-packages
+# may have stale judo files.
+[tool.pixi.tasks.clean-all]
+depends-on = ["clean-build"]
+cmd = """
+sh -c '
+set -e
+rm -rf .judo-src
+rm -rf .pixi
+rm -rf outputs/ run_mpc/results/ out/
+echo "Full clean done. Run: pixi install && pixi run build"
+'
+"""
 
 [tool.pytest.ini_options]
 markers = [
