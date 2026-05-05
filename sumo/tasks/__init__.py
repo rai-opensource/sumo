@@ -1,6 +1,7 @@
 # Copyright (c) 2025-2026 Robotics and AI Institute LLC dba RAI Institute. All rights reserved.
 
-from judo.tasks import get_registered_tasks, register_task
+from judo.tasks import TaskRegistration, get_registered_tasks, register_task
+from judo.tasks.spot.spot_constants import SPOT_LOCOMOTION_POLICY_PATH
 
 G1_TASK_NAMES = (
     "g1_base",
@@ -16,11 +17,23 @@ from sumo.tasks.g1.g1_chair_push import G1ChairPush, G1ChairPushConfig
 from sumo.tasks.g1.g1_door import G1Door, G1DoorConfig
 from sumo.tasks.g1.g1_table_push import G1TablePush, G1TablePushConfig
 
-register_task("g1_base", G1Base, G1BaseConfig)
-register_task("g1_box", G1Box, G1BoxConfig)
-register_task("g1_chair_push", G1ChairPush, G1ChairPushConfig)
-register_task("g1_door", G1Door, G1DoorConfig)
-register_task("g1_table_push", G1TablePush, G1TablePushConfig)
+register_task("g1_base", G1Base, G1BaseConfig, rollout_backend="mujoco_g1", simulation_backend="mujoco_g1")
+register_task("g1_box", G1Box, G1BoxConfig, rollout_backend="mujoco_g1", simulation_backend="mujoco_g1")
+register_task(
+    "g1_chair_push",
+    G1ChairPush,
+    G1ChairPushConfig,
+    rollout_backend="mujoco_g1",
+    simulation_backend="mujoco_g1",
+)
+register_task("g1_door", G1Door, G1DoorConfig, rollout_backend="mujoco_g1", simulation_backend="mujoco_g1")
+register_task(
+    "g1_table_push",
+    G1TablePush,
+    G1TablePushConfig,
+    rollout_backend="mujoco_g1",
+    simulation_backend="mujoco_g1",
+)
 
 SPOT_TASK_NAMES = (
     "spot_base",
@@ -63,29 +76,35 @@ from sumo.tasks.spot.spot_tire_roll import SpotTireRoll, SpotTireRollConfig
 from sumo.tasks.spot.spot_tire_stack import SpotTireStack, SpotTireStackConfig
 from sumo.tasks.spot.spot_tire_upright import SpotTireUpright, SpotTireUprightConfig
 
-register_task("spot_base", SpotBase, SpotBaseConfig)
-register_task("spot_box_push", SpotBoxPush, SpotBoxPushConfig)
-register_task("spot_chair_push", SpotChairPush, SpotChairPushConfig)
-register_task("spot_cone_push", SpotConePush, SpotConePushConfig)
-register_task("spot_rack_push", SpotRackPush, SpotRackPushConfig)
-register_task("spot_tire_push", SpotTirePush, SpotTirePushConfig)
-register_task("spot_box_upright", SpotBoxUpright, SpotBoxUprightConfig)
-register_task("spot_chair_upright", SpotChairUpright, SpotChairUprightConfig)
-register_task("spot_cone_upright", SpotConeUpright, SpotConeUprightConfig)
-register_task("spot_rack_upright", SpotRackUpright, SpotRackUprightConfig)
-register_task("spot_tire_upright", SpotTireUpright, SpotTireUprightConfig)
-register_task("spot_chair_ramp", SpotChairRamp, SpotChairRampConfig)
-register_task("spot_barrier_upright", SpotBarrierUpright, SpotBarrierUprightConfig)
-register_task("spot_barrier_drag", SpotBarrierDrag, SpotBarrierDragConfig)
-register_task("spot_tire_roll", SpotTireRoll, SpotTireRollConfig)
-register_task("spot_tire_stack", SpotTireStack, SpotTireStackConfig)
-register_task("spot_tire_rack_drag", SpotTireRackDrag, SpotTireRackDragConfig)
-register_task("spot_rugged_box_push", SpotRuggedBoxPush, SpotRuggedBoxPushConfig)
+_SPOT_REGISTRATION_KWARGS = {
+    "rollout_backend": "mujoco_hierarchical",
+    "simulation_backend": "mujoco_hierarchical",
+    "locomotion_policy_path": str(SPOT_LOCOMOTION_POLICY_PATH),
+}
+
+register_task("spot_base", SpotBase, SpotBaseConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_box_push", SpotBoxPush, SpotBoxPushConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_chair_push", SpotChairPush, SpotChairPushConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_cone_push", SpotConePush, SpotConePushConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_rack_push", SpotRackPush, SpotRackPushConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_tire_push", SpotTirePush, SpotTirePushConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_box_upright", SpotBoxUpright, SpotBoxUprightConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_chair_upright", SpotChairUpright, SpotChairUprightConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_cone_upright", SpotConeUpright, SpotConeUprightConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_rack_upright", SpotRackUpright, SpotRackUprightConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_tire_upright", SpotTireUpright, SpotTireUprightConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_chair_ramp", SpotChairRamp, SpotChairRampConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_barrier_upright", SpotBarrierUpright, SpotBarrierUprightConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_barrier_drag", SpotBarrierDrag, SpotBarrierDragConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_tire_roll", SpotTireRoll, SpotTireRollConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_tire_stack", SpotTireStack, SpotTireStackConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_tire_rack_drag", SpotTireRackDrag, SpotTireRackDragConfig, **_SPOT_REGISTRATION_KWARGS)
+register_task("spot_rugged_box_push", SpotRuggedBoxPush, SpotRuggedBoxPushConfig, **_SPOT_REGISTRATION_KWARGS)
 
 SUMO_TASK_NAMES = G1_TASK_NAMES + SPOT_TASK_NAMES
 
 
-def get_sumo_registered_tasks() -> dict[str, tuple[type, type]]:
+def get_sumo_registered_tasks() -> dict[str, TaskRegistration]:
     """Return only the task registrations owned by sumo."""
     registered_tasks = get_registered_tasks()
     return {task_name: registered_tasks[task_name] for task_name in SUMO_TASK_NAMES if task_name in registered_tasks}

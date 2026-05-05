@@ -124,8 +124,8 @@ def test_sumo_run_mpc_import():
 
 
 def test_sumo_dora_imports():
-    from sumo.app.dora.controller import ControllerNode
-    from sumo.app.dora.simulation import G1Simulation, SimulationNode
+    from sumo.app.dora.controller_node import ControllerNode
+    from sumo.app.dora.simulation_node import G1Simulation, SimulationNode
 
     assert ControllerNode is not None
     assert SimulationNode is not None
@@ -151,7 +151,7 @@ def test_prefer_active_env_libs(monkeypatch, tmp_path):
 
 
 def test_simulation_backend_resolution_is_lazy():
-    from sumo.app.dora import simulation as simulation_module
+    from sumo.app.dora import simulation_node as simulation_module
 
     # G1Simulation is defined locally in sumo
     assert hasattr(simulation_module, "G1Simulation")
