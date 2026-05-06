@@ -5956,7 +5956,7 @@ packages:
 - pypi: ./
   name: sumo
   version: 0.0.1
-  sha256: a6621f840a2144d82b22a2d29ede5ec1bee54f1e9a8b4ba72b46affc46fd0faf
+  sha256: fdadb279c9654192c908a9ac3728a5db5bf6fca7a5cf55052f36f44f2fa68fa7
   requires_dist:
   - judo-rai @ git+https://github.com/rai-opensource/judo.git@dta/fix_for_sumo
   - numpy

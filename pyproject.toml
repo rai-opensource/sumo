@@ -236,4 +236,5 @@ exclude = [
     "**/__pycache__",
 ]
 stubPath = "typings"
+useLibraryCodeForTypes = true
 reportAttributeAccessIssue = "warning"
