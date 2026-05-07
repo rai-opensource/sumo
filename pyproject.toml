@@ -127,6 +127,12 @@ depends-on = ["build-g1-ext", "build-judo-ext"]
 cwd = "g1_extensions"
 cmd = "rm -rf build/"
 
+# Re-resolve the judo-rai git dependency to the latest commit on its tracked
+# branch, then rebuild C++ extensions. Use this when the judo branch has new
+# commits and `pixi install` keeps installing the old pinned commit.
+[tool.pixi.tasks.update-judo]
+cmd = "pixi update judo-rai && pixi run clean-build && pixi run build"
+
 # Remove all C++ build artifacts (g1_extensions and judo mujoco_extensions),
 # the installed extension .so files in site-packages, and Python caches.
 # Use this when mujoco / judo / pybind11 versions change to avoid stale objects.
