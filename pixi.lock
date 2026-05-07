@@ -160,7 +160,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/49/fa/391e437a34e55095173dca5f24070d89cbc233ff85bf1c29c93248c6588d/imageio-2.37.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl
-      - pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#e0d14bf04a5051be7f84516b6779afbf9d0a7760
+      - pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#a2da9f51804ba79881740b5de266991dfbfaed9f
       - pypi: https://files.pythonhosted.org/packages/d0/34/9e591954939276bb679b73773836c6684c22e56d05980e31d52a9a8deb18/lxml-6.0.2-cp313-cp313-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/44/29/c89ab58a20965d630df347999b55306b146473cadd0fb8b7879c85ca7a54/manifold3d-3.4.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/03/30/e54ececd0403a5495c340b693075abec92a6d17dc44283b6cb059534f7ed/mapbox_earcut-2.0.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl
@@ -353,7 +353,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/49/fa/391e437a34e55095173dca5f24070d89cbc233ff85bf1c29c93248c6588d/imageio-2.37.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl
-      - pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#e0d14bf04a5051be7f84516b6779afbf9d0a7760
+      - pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#a2da9f51804ba79881740b5de266991dfbfaed9f
       - pypi: https://files.pythonhosted.org/packages/5d/f4/2a94a3d3dfd6c6b433501b8d470a1960a20ecce93245cf2db1706adf6c19/lxml-6.0.2-cp313-cp313-macosx_10_13_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/68/d0/b1b5a1dc4db9e4ce844d025a72777a5a2251a33c5a84cff7e64ed9425373/manifold3d-3.4.0-cp313-cp313-macosx_10_14_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/8b/7c/c5dd5b255b9828ba5df729e62fdd470a322c938f07ef392ca03c0592bb3a/mapbox_earcut-2.0.0-cp313-cp313-macosx_10_13_x86_64.whl
@@ -545,7 +545,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/49/fa/391e437a34e55095173dca5f24070d89cbc233ff85bf1c29c93248c6588d/imageio-2.37.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl
-      - pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#e0d14bf04a5051be7f84516b6779afbf9d0a7760
+      - pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#a2da9f51804ba79881740b5de266991dfbfaed9f
       - pypi: https://files.pythonhosted.org/packages/53/fd/4e8f0540608977aea078bf6d79f128e0e2c2bba8af1acf775c30baa70460/lxml-6.0.2-cp313-cp313-macosx_10_13_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/f2/b3/47473d3f3bda127569e9615416ff24b1049b74cc08540572a9747e00bbe0/manifold3d-3.4.0-cp313-cp313-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/1a/3f/03f23eac9831e7d0d8da3d6993695a9a3724659c94e9997f6b7aaccc199d/mapbox_earcut-2.0.0-cp313-cp313-macosx_11_0_arm64.whl
@@ -740,7 +740,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/49/fa/391e437a34e55095173dca5f24070d89cbc233ff85bf1c29c93248c6588d/imageio-2.37.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl
-      - pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#e0d14bf04a5051be7f84516b6779afbf9d0a7760
+      - pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#a2da9f51804ba79881740b5de266991dfbfaed9f
       - pypi: https://files.pythonhosted.org/packages/d0/34/9e591954939276bb679b73773836c6684c22e56d05980e31d52a9a8deb18/lxml-6.0.2-cp313-cp313-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/44/29/c89ab58a20965d630df347999b55306b146473cadd0fb8b7879c85ca7a54/manifold3d-3.4.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/03/30/e54ececd0403a5495c340b693075abec92a6d17dc44283b6cb059534f7ed/mapbox_earcut-2.0.0-cp313-cp313-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl
@@ -933,7 +933,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/49/fa/391e437a34e55095173dca5f24070d89cbc233ff85bf1c29c93248c6588d/imageio-2.37.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl
-      - pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#e0d14bf04a5051be7f84516b6779afbf9d0a7760
+      - pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#a2da9f51804ba79881740b5de266991dfbfaed9f
       - pypi: https://files.pythonhosted.org/packages/5d/f4/2a94a3d3dfd6c6b433501b8d470a1960a20ecce93245cf2db1706adf6c19/lxml-6.0.2-cp313-cp313-macosx_10_13_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/68/d0/b1b5a1dc4db9e4ce844d025a72777a5a2251a33c5a84cff7e64ed9425373/manifold3d-3.4.0-cp313-cp313-macosx_10_14_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/8b/7c/c5dd5b255b9828ba5df729e62fdd470a322c938f07ef392ca03c0592bb3a/mapbox_earcut-2.0.0-cp313-cp313-macosx_10_13_x86_64.whl
@@ -1125,7 +1125,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/49/fa/391e437a34e55095173dca5f24070d89cbc233ff85bf1c29c93248c6588d/imageio-2.37.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/69/90/f63fb5873511e014207a475e2bb4e8b2e570d655b00ac19a9a0ca0a385ee/jsonschema-4.26.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl
-      - pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#e0d14bf04a5051be7f84516b6779afbf9d0a7760
+      - pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#a2da9f51804ba79881740b5de266991dfbfaed9f
       - pypi: https://files.pythonhosted.org/packages/53/fd/4e8f0540608977aea078bf6d79f128e0e2c2bba8af1acf775c30baa70460/lxml-6.0.2-cp313-cp313-macosx_10_13_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/f2/b3/47473d3f3bda127569e9615416ff24b1049b74cc08540572a9747e00bbe0/manifold3d-3.4.0-cp313-cp313-macosx_11_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/1a/3f/03f23eac9831e7d0d8da3d6993695a9a3724659c94e9997f6b7aaccc199d/mapbox_earcut-2.0.0-cp313-cp313-macosx_11_0_arm64.whl
@@ -2831,7 +2831,7 @@ packages:
   requires_dist:
   - referencing>=0.31.0
   requires_python: '>=3.9'
-- pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#e0d14bf04a5051be7f84516b6779afbf9d0a7760
+- pypi: git+https://github.com/rai-opensource/judo.git?rev=dta%2Ffix_for_sumo#a2da9f51804ba79881740b5de266991dfbfaed9f
   name: judo-rai
   version: 0.1.0
   requires_dist:
@@ -5956,7 +5956,7 @@ packages:
 - pypi: ./
   name: sumo
   version: 0.0.1
-  sha256: fdadb279c9654192c908a9ac3728a5db5bf6fca7a5cf55052f36f44f2fa68fa7
+  sha256: afeaae9ec5d83aedda06fca4132d15682a7ff30fcaec8d1ae0f6c2abee3a76cf
   requires_dist:
   - judo-rai @ git+https://github.com/rai-opensource/judo.git@dta/fix_for_sumo
   - numpy
