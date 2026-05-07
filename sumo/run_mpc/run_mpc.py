@@ -57,22 +57,22 @@ class RunMPCConfig:
 
 def _create_sim(task_name: str):
     """Create the right simulation backend for a task."""
-    task_cls, _ = get_registered_tasks()[task_name]
-    default_backend = getattr(task_cls, "default_backend", None)
+    task_entry = get_registered_tasks()[task_name]
+    simulation_backend = task_entry.simulation_backend
 
-    if default_backend == "mujoco_g1":
+    if simulation_backend == "mujoco_g1":
         require_g1_extensions()
         return G1Simulation(init_task=task_name)
 
-    if task_cls().uses_locomotion_policy:
+    if simulation_backend == "mujoco_hierarchical":
         require_mujoco_extensions()
         from judo.simulation import get_simulation_backend
 
-        return get_simulation_backend("mujoco_policy")(init_task=task_name)
+        return get_simulation_backend("mujoco_hierarchical")(init_task=task_name)
 
     from judo.simulation import get_simulation_backend
 
-    return get_simulation_backend("mujoco")(init_task=task_name)
+    return get_simulation_backend(simulation_backend)(init_task=task_name)
 
 
 def _make_condition_checker(method):
@@ -246,7 +246,9 @@ def run_mpc(config: RunMPCConfig) -> list[dict]:
     # Create controller
     controller_config = ControllerConfig()
     controller_config.set_override(config.init_task)
-    controller = Controller(controller_config, task, optimizer, custom_rollout_backends={"mujoco_g1": G1RolloutBackend})
+    controller = Controller(
+        controller_config, task, optimizer, rollout_backend_registry={"mujoco_g1": G1RolloutBackend}
+    )
 
     # Set up visualization
     viser_model = None

@@ -1,6 +1,6 @@
 # Copyright (c) 2025-2026 Robotics and AI Institute LLC dba RAI Institute. All rights reserved.
 
-from judo.app.dora.visualization import VisualizationNode as JudoVisualizationNode
+from judo.app.dora.visualization_node import VisualizationNode as JudoVisualizationNode
 
 import sumo.controller  # noqa: F401 -- register controller/optimizer overrides
 import sumo.tasks  # noqa: F401 -- register all sumo tasks

@@ -31,6 +31,22 @@ pixi run build
 If you prefer named environments, `pixi install -e dev` is equivalent for this repo,
 and the corresponding task form is `pixi run -e dev ...`.
 
+### Cleaning the build
+
+If native extensions misbehave (e.g. after a mujoco / judo / pybind11 version
+bump, or if you see odd shape mismatches between Python and the C++ rollout
+backend), wipe the build artifacts before rebuilding:
+
+```bash
+# Remove C++ build dirs, deployed .so files, and __pycache__ directories
+pixi run clean-build
+pixi run build
+
+# Full reset: also removes .judo-src/ and .pixi/ (forces fresh clone + reinstall)
+pixi run clean-all
+pixi run build   # auto-runs `pixi install` first
+```
+
 ## Run
 
 ```bash

@@ -184,20 +184,16 @@ class G1ChairPush(G1Base):
             ]
         )
 
-    def success(
-        self, model: MjModel, data: MjData, config: G1ChairPushConfig, metadata: dict[str, Any] | None = None
-    ) -> bool:
+    def success(self, model: MjModel, data: MjData, metadata: dict[str, Any] | None = None) -> bool:
         """Check if the chair is in the goal position."""
         object_pos = data.qpos[..., self.object_pose_idx[0:2]]  # XY only
         object_vel = data.qvel[..., self.object_vel_idx[0:3]]
-        goal_pos = np.array(config.goal_position[:2])  # XY only
+        goal_pos = np.array(self.config.goal_position[:2])  # XY only
         position_check = np.linalg.norm(object_pos - goal_pos, axis=-1, ord=np.inf) < POSITION_TOLERANCE
         velocity_check = np.linalg.norm(object_vel, axis=-1) < VELOCITY_TOLERANCE
         return position_check and velocity_check
 
-    def failure(
-        self, model: MjModel, data: MjData, config: G1ChairPushConfig, metadata: dict[str, Any] | None = None
-    ) -> bool:
+    def failure(self, model: MjModel, data: MjData, metadata: dict[str, Any] | None = None) -> bool:
         """Check if G1 has fallen."""
         body_height = data.qpos[..., self.body_pose_idx[2]]
-        return bool(body_height <= config.fall_threshold)
+        return bool(body_height <= self.config.fall_threshold)

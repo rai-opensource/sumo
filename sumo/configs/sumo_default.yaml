@@ -5,8 +5,8 @@ task: spot_box_push
 
 node_definitions:
   simulation:
-    _target_: sumo.app.dora.simulation.SimulationNode
+    _target_: sumo.app.dora.simulation_node.SimulationNode
   visualization:
-    _target_: sumo.app.dora.visualization.VisualizationNode
+    _target_: sumo.app.dora.visualization_node.VisualizationNode
   controller:
-    _target_: sumo.app.dora.controller.ControllerNode
+    _target_: sumo.app.dora.controller_node.ControllerNode

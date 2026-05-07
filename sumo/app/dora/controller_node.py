@@ -1,6 +1,6 @@
 # Copyright (c) 2025-2026 Robotics and AI Institute LLC dba RAI Institute. All rights reserved.
 
-from judo.app.dora.controller import ControllerNode as JudoControllerNode
+from judo.app.dora.controller_node import ControllerNode as JudoControllerNode
 
 import sumo.controller  # noqa: F401 -- register controller/optimizer overrides
 import sumo.tasks  # noqa: F401 -- register all sumo tasks

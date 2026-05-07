@@ -208,18 +208,14 @@ class G1Door(G1Base):
             ]
         )
 
-    def success(
-        self, model: MjModel, data: MjData, config: G1DoorConfig, metadata: dict[str, Any] | None = None
-    ) -> bool:
+    def success(self, model: MjModel, data: MjData, metadata: dict[str, Any] | None = None) -> bool:
         """Check if the robot has reached the target XY position."""
         body_pos = data.qpos[..., self.body_pose_idx[0:2]]  # Get XY position only
-        goal_pos = np.array(config.goal_position[:2])  # Get XY goal only
+        goal_pos = np.array(self.config.goal_position[:2])  # Get XY goal only
         position_check = np.linalg.norm(body_pos - goal_pos, axis=-1) < POSITION_TOLERANCE
         return bool(position_check)
 
-    def failure(
-        self, model: MjModel, data: MjData, config: G1DoorConfig, metadata: dict[str, Any] | None = None
-    ) -> bool:
+    def failure(self, model: MjModel, data: MjData, metadata: dict[str, Any] | None = None) -> bool:
         """Check if G1 has fallen."""
         body_height = data.qpos[..., self.body_pose_idx[2]]
-        return bool(body_height <= config.fall_threshold)
+        return bool(body_height <= self.config.fall_threshold)

@@ -85,7 +85,6 @@ class G1Base(Task[ConfigT], Generic[ConfigT]):
     """Base class for G1 tasks."""
 
     config_t: type[G1BaseConfig] = G1BaseConfig  # type: ignore[assignment]
-    default_backend = "mujoco_g1"  # Use G1-specific backend
 
     def _process_spec(self) -> None:
         """No-op for G1 tasks (meshes are local)."""
