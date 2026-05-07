@@ -193,9 +193,7 @@ class G1ChairPush(G1Base):
         velocity_check = np.linalg.norm(object_vel, axis=-1) < VELOCITY_TOLERANCE
         return position_check and velocity_check
 
-    def failure(
-        self, model: MjModel, data: MjData, metadata: dict[str, Any] | None = None
-    ) -> bool:
+    def failure(self, model: MjModel, data: MjData, metadata: dict[str, Any] | None = None) -> bool:
         """Check if G1 has fallen."""
         body_height = data.qpos[..., self.body_pose_idx[2]]
         return bool(body_height <= self.config.fall_threshold)

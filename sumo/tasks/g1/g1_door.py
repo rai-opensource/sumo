@@ -215,9 +215,7 @@ class G1Door(G1Base):
         position_check = np.linalg.norm(body_pos - goal_pos, axis=-1) < POSITION_TOLERANCE
         return bool(position_check)
 
-    def failure(
-        self, model: MjModel, data: MjData, metadata: dict[str, Any] | None = None
-    ) -> bool:
+    def failure(self, model: MjModel, data: MjData, metadata: dict[str, Any] | None = None) -> bool:
         """Check if G1 has fallen."""
         body_height = data.qpos[..., self.body_pose_idx[2]]
         return bool(body_height <= self.config.fall_threshold)
