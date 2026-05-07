@@ -187,8 +187,8 @@ class G1TablePush(G1Base):
         return position_check and velocity_check
 
     def failure(
-        self, model: MjModel, data: MjData, config: G1TablePushConfig, metadata: dict[str, Any] | None = None
+        self, model: MjModel, data: MjData, metadata: dict[str, Any] | None = None
     ) -> bool:
         """Check if G1 has fallen."""
         body_height = data.qpos[..., self.body_pose_idx[2]]
-        return bool(body_height <= config.fall_threshold)
+        return bool(body_height <= self.config.fall_threshold)

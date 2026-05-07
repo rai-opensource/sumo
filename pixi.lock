@@ -5956,7 +5956,7 @@ packages:
 - pypi: ./
   name: sumo
   version: 0.0.1
-  sha256: afeaae9ec5d83aedda06fca4132d15682a7ff30fcaec8d1ae0f6c2abee3a76cf
+  sha256: 867132b3a5ffdc637c26de5a712f9028e1e8bdbd6c0a01e773ccfee51a930fe6
   requires_dist:
   - judo-rai @ git+https://github.com/rai-opensource/judo.git@dta/fix_for_sumo
   - numpy
@@ -5967,6 +5967,7 @@ packages:
   - scipy
   - pytest ; extra == 'dev'
   - ruff ; extra == 'dev'
+  requires_python: '>=3.10'
 - pypi: https://files.pythonhosted.org/packages/3a/83/4f5b250220e1a5acd31345a5ec1c95a7769725d0d8135276f399f44062f8/svg_path-7.0-py2.py3-none-any.whl
   name: svg-path
   version: '7.0'

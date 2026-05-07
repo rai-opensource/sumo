@@ -8,6 +8,7 @@ allow-direct-references = true
 [project]
 name = "sumo"
 version = "0.0.1"
+requires-python = ">=3.10"
 dependencies = [
     "judo-rai @ git+https://github.com/rai-opensource/judo.git@dta/fix_for_sumo",
     "numpy",
